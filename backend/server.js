@@ -2,6 +2,8 @@ import express from 'express'
 import dotenv from'dotenv'
 import connectDB from './config/db.js'
 import userRouter from "./routes/userRoute.js"
+import itemRouter from "./routes/itemRoute.js"
+
 import {notFound, errorHandler} from './middleware/errorMiddleware.js'
 dotenv.config()
 connectDB()
@@ -11,6 +13,8 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 
 app.use("/api/user",userRouter)
+app.use("/api/item",itemRouter)
+
 app.use(notFound)
 app.use(errorHandler)
 const PORT=process.env.PORT || 5000

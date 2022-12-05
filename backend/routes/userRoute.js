@@ -21,6 +21,7 @@ router.post('/addUser', async(req,res)=>{
         console.log("Done");
         res.send("DONE");
       } catch (err) {
+
         console.log(err);
         res.send(err);
       }

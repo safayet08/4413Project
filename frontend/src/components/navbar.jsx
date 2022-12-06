@@ -1,5 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const NavBar = () => {
     const state = [];
@@ -28,14 +30,17 @@ const NavBar = () => {
                 >
                     <ul className="navbar-nav m-auto my-2 text-center">
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/">
-                                Home{" "}
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/item">
-                                Items
-                            </NavLink>
+                            <Form className="d-flex">
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+                                <Button variant="outline-secondary">
+                                    Search
+                                </Button>
+                            </Form>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/about">

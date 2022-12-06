@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { addItemToCart, removeItemFromCart } from "./utils/carthandler";
 
-const Cart = () => {
-    const state = [];
-    const dispatch = [];
+const Cart = (props) => {
+    const [cart, setCart] = React.useState([]);
 
     const EmptyCart = () => {
         return (
@@ -21,23 +21,24 @@ const Cart = () => {
         );
     };
 
-    const addItem = (product) => {
-        //dispatch(addCart(product));
+    const addItem = (item) => {
+        addItemToCart(item);
     };
-    const removeItem = (product) => {
-        // dispatch(delCart(product));
+    const removeItem = (item) => {
+        removeItemFromCart(item);
     };
 
     const ShowCart = () => {
         let subtotal = 0;
-        let shipping = 30.0;
+        let shipping = 15.0;
         let totalItems = 0;
-        state.map((item) => {
-            return (subtotal += item.price * item.qty);
+
+        cart.map((cartEntry) => {
+            return (subtotal += cartEntry.item.price * cartEntry.quantity);
         });
 
-        state.map((item) => {
-            return (totalItems += item.qty);
+        cart.map((cartEntry) => {
+            return (totalItems += cartEntry.quantity);
         });
         return (
             <>
@@ -50,9 +51,9 @@ const Cart = () => {
                                         <h5 className="mb-0">Item List</h5>
                                     </div>
                                     <div className="card-body">
-                                        {state.map((item) => {
+                                        {cart.map((cartEntry) => {
                                             return (
-                                                <div key={item.id}>
+                                                <div key={cartEntry.item._id}>
                                                     <div className="row d-flex align-items-center">
                                                         <div className="col-lg-3 col-md-12">
                                                             <div
@@ -61,11 +62,15 @@ const Cart = () => {
                                                             >
                                                                 <img
                                                                     src={
-                                                                        item.image
+                                                                        cartEntry
+                                                                            .item
+                                                                            .image
                                                                     }
                                                                     // className="w-100"
                                                                     alt={
-                                                                        item.title
+                                                                        cartEntry
+                                                                            .item
+                                                                            .title
                                                                     }
                                                                     width={100}
                                                                     height={75}
@@ -76,7 +81,11 @@ const Cart = () => {
                                                         <div className="col-lg-5 col-md-6">
                                                             <p>
                                                                 <strong>
-                                                                    {item.title}
+                                                                    {
+                                                                        cartEntry
+                                                                            .item
+                                                                            .title
+                                                                    }
                                                                 </strong>
                                                             </p>
                                                             {/* <p>Color: blue</p>
@@ -95,7 +104,7 @@ const Cart = () => {
                                                                     className="btn px-3"
                                                                     onClick={() => {
                                                                         removeItem(
-                                                                            item
+                                                                            cartEntry.item
                                                                         );
                                                                     }}
                                                                 >
@@ -103,14 +112,18 @@ const Cart = () => {
                                                                 </button>
 
                                                                 <p className="mx-5">
-                                                                    {item.qty}
+                                                                    {
+                                                                        cartEntry
+                                                                            .item
+                                                                            .quantity
+                                                                    }
                                                                 </p>
 
                                                                 <button
                                                                     className="btn px-3"
                                                                     onClick={() => {
                                                                         addItem(
-                                                                            item
+                                                                            cartEntry.item
                                                                         );
                                                                     }}
                                                                 >
@@ -122,11 +135,17 @@ const Cart = () => {
                                                                 <strong>
                                                                     <span className="text-muted">
                                                                         {
-                                                                            item.qty
+                                                                            cartEntry
+                                                                                .item
+                                                                                .quantity
                                                                         }
                                                                     </span>{" "}
                                                                     x $
-                                                                    {item.price}
+                                                                    {
+                                                                        cartEntry
+                                                                            .item
+                                                                            .price
+                                                                    }
                                                                 </strong>
                                                             </p>
                                                         </div>
@@ -177,7 +196,7 @@ const Cart = () => {
                                             to="/checkout"
                                             className="btn btn-dark btn-lg btn-block"
                                         >
-                                            Go to checkout
+                                            Checkout
                                         </Link>
                                     </div>
                                 </div>
@@ -194,7 +213,7 @@ const Cart = () => {
             <div className="container my-3 py-3">
                 <h1 className="text-center">Cart</h1>
                 <hr />
-                {state.length > 0 ? <ShowCart /> : <EmptyCart />}
+                {cart.length > 0 ? <ShowCart /> : <EmptyCart />}
             </div>
         </>
     );

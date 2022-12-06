@@ -1,0 +1,6 @@
+import React from "react";
+
+const userContext = React.createContext();
+userContext.displayName = "CartContext";
+
+export default userContext;

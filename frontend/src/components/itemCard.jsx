@@ -5,14 +5,7 @@ import ListGroup from "./common/listGroup";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-
-function buyNowHandler() {
-    console.log("buy now");
-}
-
-function addToCartHandler() {
-    console.log("add to cart");
-}
+import { addItemToCart } from "./utils/carthandler";
 
 class Item extends Component {
     state = {
@@ -55,7 +48,7 @@ class Item extends Component {
                         </Link>
                         <button
                             className="btn btn-warning m-1"
-                            onClick={addToCartHandler}
+                            onClick={() => addItemToCart(item)}
                         >
                             Add to Cart
                         </button>

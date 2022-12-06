@@ -4,7 +4,6 @@ import ItemList from "../components/itemList";
 const Home = () => {
     return (
         <>
-            <Cart />
             <ItemList />
         </>
     );

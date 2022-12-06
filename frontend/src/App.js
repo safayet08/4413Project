@@ -10,10 +10,13 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Item from "./pages/item";
 
+import CartContext from "./context/cartContext";
+import Cart from "./components/Cart";
+
 class App extends Component {
     render() {
         return (
-            <React.Fragment>
+            <CartContext.Provider value={{ cart: [] }}>
                 <ToastContainer />
                 <NavBar />
                 <main className="container">
@@ -21,12 +24,12 @@ class App extends Component {
                         <Route exact path="/" element={<Home />} />
                         <Route path="/register" element={<RegisterForm />} />
                         <Route path="/login" element={<LoginForm />} />
-                        <Route path="/item" element={<Item />} />
                         <Route path="/item/:_id" element={<Item />} />
                         <Route path="/not-found" element={<NotFound />} />
+                        <Route path="/cart" element={<Cart />} />
                     </Routes>
                 </main>
-            </React.Fragment>
+            </CartContext.Provider>
         );
     }
 }

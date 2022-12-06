@@ -8,6 +8,7 @@ import LoginForm from "./pages/loginForm";
 import RegisterForm from "./pages/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import Item from "./pages/item";
 
 class App extends Component {
     render() {
@@ -20,6 +21,8 @@ class App extends Component {
                         <Route exact path="/" element={<Home />} />
                         <Route path="/register" element={<RegisterForm />} />
                         <Route path="/login" element={<LoginForm />} />
+                        <Route path="/item" element={<Item />} />
+                        <Route path="/item/:_id" element={<Item />} />
                         <Route path="/not-found" element={<NotFound />} />
                     </Routes>
                 </main>

@@ -48,7 +48,7 @@ class Item extends Component {
                     </ul>
                     <div className="card-body">
                         <Link
-                            to={"/item/" + item.id}
+                            to={"/item/" + item._id}
                             className="btn btn-success m-1"
                         >
                             Buy Now

@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import Cart from "../components/Cart";
 import ItemList from "../components/itemList";
 

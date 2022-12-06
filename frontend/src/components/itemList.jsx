@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Item from "./item";
+import Item from "./itemCard";
 import { getItems } from "../services/fakeItemService";
 
 class ItemList extends Component {

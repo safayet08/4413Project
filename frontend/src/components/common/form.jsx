@@ -51,7 +51,11 @@ class Form extends Component {
 
     renderButton(label) {
         return (
-            <button disabled={this.validate()} className="btn btn-primary">
+            <button
+                className="my-2 mx-auto btn btn-dark"
+                type="submit"
+                disabled={this.validate()}
+            >
                 {label}
             </button>
         );
@@ -72,7 +76,7 @@ class Form extends Component {
         );
     }
 
-    renderInput(name, label, type = "text") {
+    renderInput(name, label, type, placeholder) {
         const { data, errors } = this.state;
 
         return (
@@ -80,9 +84,11 @@ class Form extends Component {
                 type={type}
                 name={name}
                 value={data[name]}
+                className="form-control"
                 label={label}
                 onChange={this.handleChange}
                 error={errors[name]}
+                placeholder={placeholder}
             />
         );
     }

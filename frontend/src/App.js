@@ -5,7 +5,7 @@ import Home from "./pages/home";
 import NavBar from "./components/navbar";
 import NotFound from "./components/notFound";
 import LoginForm from "./pages/loginForm";
-import RegisterForm from "./components/registerForm";
+import RegisterForm from "./pages/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 

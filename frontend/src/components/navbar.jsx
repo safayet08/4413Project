@@ -2,6 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
 
 const NavBar = () => {
     const state = [];
@@ -31,14 +34,36 @@ const NavBar = () => {
                     <ul className="navbar-nav m-auto my-2 text-center">
                         <li className="nav-item">
                             <Form className="d-flex">
+                                <DropdownButton
+                                    as={ButtonGroup}
+                                    key="down"
+                                    id="dropdown-button-drop-down"
+                                    className="mx-2"
+                                    drop="down"
+                                    variant="secondary"
+                                    title="ALL"
+                                >
+                                    <Dropdown.Item eventKey="1">
+                                        Smartphone
+                                    </Dropdown.Item>
+                                    <Dropdown.Item eventKey="2">
+                                        Another hardcoded Category
+                                    </Dropdown.Item>
+                                    <Dropdown.Item eventKey="3">
+                                        Other hardcoded Category
+                                    </Dropdown.Item>
+                                </DropdownButton>
                                 <Form.Control
                                     type="search"
                                     placeholder="Search"
-                                    className="me-2"
+                                    className="me-1"
                                     aria-label="Search"
                                 />
                                 <Button variant="outline-secondary">
-                                    Search
+                                    <i
+                                        class="fa fa-search"
+                                        aria-hidden="true"
+                                    ></i>
                                 </Button>
                             </Form>
                         </li>

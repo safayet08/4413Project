@@ -49,10 +49,7 @@ const NavBar = () => {
                         </li>
                     </ul>
                     <div className="buttons text-center">
-                        <NavLink
-                            to="/login"
-                            className="btn btn-outline-dark m-2"
-                        >
+                        <NavLink to="/login" className="btn btn-dark m-2">
                             <i className="fa fa-sign-in mr-1"></i> Login
                         </NavLink>
                         <NavLink to="/register" className="btn btn-dark m-2">

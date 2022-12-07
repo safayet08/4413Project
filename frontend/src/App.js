@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Route, Navigate, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+
+import Checkout from "./pages/checkout";
 import Home from "./pages/home";
 import NavBar from "./components/navbar";
 import NotFound from "./components/notFound";
@@ -10,13 +12,11 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Item from "./pages/item";
 
-import CartContext from "./context/cartContext";
-import Cart from "./components/Cart";
-
+import CartProvider from "./components/cartContext";
 class App extends Component {
     render() {
         return (
-            <CartContext.Provider value={{ cart: [] }}>
+            <CartProvider>
                 <ToastContainer />
                 <NavBar />
                 <main className="container">
@@ -26,10 +26,10 @@ class App extends Component {
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/item/:_id" element={<Item />} />
                         <Route path="/not-found" element={<NotFound />} />
-                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/checkout" element={<Checkout />} />
                     </Routes>
                 </main>
-            </CartContext.Provider>
+            </CartProvider>
         );
     }
 }

@@ -19,6 +19,7 @@ const importItems = async () => {
         description:serverItem.description? serverItem.description: "",
         category: serverItem.category,
         price: serverItem.price,
+        rating: null,
         stock:serverItem.stock,
         image:serverItem.thumbnail
     }

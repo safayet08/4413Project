@@ -126,7 +126,6 @@ const NavBar = () => {
                                     menuVariant="dark"
                                 >
                                     <NavDropdown.Item
-                                        href="#action/3.1"
                                         onClick={() =>
                                             setSearchFilter("By Brand")
                                         }
@@ -134,7 +133,6 @@ const NavBar = () => {
                                         By Brand
                                     </NavDropdown.Item>
                                     <NavDropdown.Item
-                                        href="#action/3.2"
                                         onClick={() =>
                                             setSearchFilter("By Category")
                                         }

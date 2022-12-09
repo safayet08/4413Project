@@ -7,6 +7,7 @@ const Item = (props) => {
     const { item } = props;
     const cart = useContext(CartContext);
     return (
+        
         <div
             id={item.id}
             key={item.id}
@@ -34,8 +35,7 @@ const Item = (props) => {
                 <div className="card-body">
                     <Link
                         to={"/item/" + item._id}
-                        className="btn btn-success m-1"
-                    >
+                        className="btn btn-success m-1" state={{item:item}}>
                         Buy Now
                     </Link>
                     <button

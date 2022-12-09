@@ -1,3 +1,4 @@
+import * as itemService from "./itemService.js"
 let listOfItems = [
     {
         _id: "638d39e6131bea3198ca9a9d",
@@ -110,10 +111,11 @@ function shuffle(array) {
 
 const items = shuffle(listOfItems);
 
-export function getItems() {
-    return items;
+export async function getItems() {
+
+    return await itemService.getItems();
 }
 
-export function getItem(id) {
-    return items.find((m) => m._id === id);
+export async function getItem(id) {
+    return await itemService.getItem(id)
 }

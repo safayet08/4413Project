@@ -11,9 +11,10 @@ import RegisterForm from "./pages/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Item from "./pages/item";
-
 import CartProvider from "./components/cartContext";
+
 class App extends Component {
+
     render() {
         return (
             <CartProvider>

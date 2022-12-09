@@ -1,8 +1,18 @@
-import { getItem } from "../services/fakeItemService";
+import * as ItemService from "../services/fakeItemService";
 import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Item = () => {
-    const item = getItem(useParams()._id);
+    const[item, setItem]=useState({})
+    const id= useParams()._id
+    useEffect(()=>{
+        const GetItemFromServer = async()=>{
+            const item= await ItemService.getItem(id)
+            setItem(item)
+        }
+        GetItemFromServer()
+
+    },[])
 
     return (
         <>

@@ -149,7 +149,7 @@ const NavBar = () => {
 
                                 <Button variant="outline-secondary">
                                     <i
-                                        class="fa fa-search"
+                                        className="fa fa-search"
                                         aria-hidden="true"
                                     ></i>
                                 </Button>

@@ -68,7 +68,7 @@ const createNewUser = async(req, res) => {
 
             //res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
 
-            res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+            res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'Strict', maxAge: 12 * 60 * 60 * 1000 });
         }
         else {
 
@@ -80,7 +80,7 @@ const createNewUser = async(req, res) => {
 
             //res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
 
-            res.clearCookie('jwt', { httpOnly: true, sameSite: 'None'});
+            res.clearCookie('jwt', { httpOnly: true, sameSite: 'Strict'});
             
             duplicateUser.name = Name;
 
@@ -102,7 +102,7 @@ const createNewUser = async(req, res) => {
 
             //res.cookie('jwt', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
 
-            res.cookie('jwt', newRefreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+            res.cookie('jwt', newRefreshToken, { httpOnly: true, sameSite: 'Strict', maxAge: 24 * 60 * 60 * 1000 });
 
         }
 

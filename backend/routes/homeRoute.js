@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
         if (user.type == "user") {
             //res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
             console.log("User found, login and send through cart.");
-            res.clearCookie("jwt", { httpOnly: true, sameSite: "None" });
+            res.clearCookie("jwt", { httpOnly: true, sameSite: "Strict" });
 
             res.redirect(
                 307,

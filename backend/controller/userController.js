@@ -66,7 +66,9 @@ const createNewUser = async(req, res) => {
 
             await UserDAO.createUser(newUser);
 
-            res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+            //res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+
+            res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
         }
         else {
 
@@ -76,7 +78,9 @@ const createNewUser = async(req, res) => {
 
             if (!duplicateUser) return res.sendStatus(401); //Unauthorized
 
-            res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
+            //res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
+
+            res.clearCookie('jwt', { httpOnly: true, sameSite: 'None'});
             
             duplicateUser.name = Name;
 
@@ -96,7 +100,9 @@ const createNewUser = async(req, res) => {
 
             await UserDAO.updateUser(duplicateUser);
 
-            res.cookie('jwt', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+            //res.cookie('jwt', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
+
+            res.cookie('jwt', newRefreshToken, { httpOnly: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 });
 
         }
 

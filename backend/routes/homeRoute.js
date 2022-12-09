@@ -15,7 +15,7 @@ router.post('/', async(req,res)=>{
     // once the cookie has expired, then delete user from DB??
     if (!cookies?.jwt) {
         // update to properly redirect without hard setting values
-        res.redirect(307, 'https://localhost:5443/api/user/addUser?createCheck=false');
+        res.redirect(307, 'http://localhost:5000/api/user/addUser?createCheck=false');
 
     }
     else {
@@ -30,9 +30,11 @@ router.post('/', async(req,res)=>{
 
         if (user.type == "user") {
             
-            res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
+            //res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
 
-            res.redirect(307, 'https://localhost:5443/api/user/login?loginCheck=false&email=' + user.email + '&password=true');
+            res.clearCookie('jwt', { httpOnly: true, sameSite: 'None'});
+
+            res.redirect(307, 'http://localhost:5000/api/user/login?loginCheck=false&email=' + user.email + '&password=true');
 
         }
         else {

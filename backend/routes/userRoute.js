@@ -2,8 +2,9 @@ import express from 'express'
 import User from '../models/userModel.js'
 // User Route to access user data, log users in, sign users up etc etc
 const router= express.Router()
-router.get('/', async(req,res)=>{
-    res.send("get at user route")
+router.get('/getUser', async(req,res)=>{
+  const response=await User.findOne({"email":req.query.email})
+  return response
 })
 
 router.post('/addUser', async(req,res)=>{

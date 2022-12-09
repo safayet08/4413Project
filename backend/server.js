@@ -3,6 +3,7 @@ import dotenv from'dotenv'
 import connectDB from './config/db.js'
 import userRouter from "./routes/userRoute.js"
 import itemRouter from "./routes/itemRoute.js"
+import orderRouter from "./routes/orderRoute.js"
 
 import {notFound, errorHandler} from './middleware/errorMiddleware.js'
 dotenv.config()
@@ -14,6 +15,8 @@ app.use(express.json())
 
 app.use("/api/user",userRouter)
 app.use("/api/item",itemRouter)
+
+app.use("/api/order/",orderRouter)
 
 app.use(notFound)
 app.use(errorHandler)

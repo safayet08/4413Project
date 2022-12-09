@@ -41,10 +41,6 @@ const itemSchema = mongoose.Schema(
         type: String,
         required: true,
       },    
-      rating:{
-        type:Number,
-        required:false,
-      },
       reviews: [reviewSchema],
 
   

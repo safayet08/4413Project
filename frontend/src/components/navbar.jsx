@@ -5,6 +5,8 @@ import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { CartContext } from "./cartContext";
 import CartProduct from "./CartProduct";
+import Form from "react-bootstrap/Form";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 const NavBar = () => {
     const cart = useContext(CartContext);
@@ -91,6 +93,7 @@ const NavBar = () => {
         );
     };
 
+    const [searchFilter, setSearchFilter] = useState("Filter");
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-3 sticky-top">
             <div className="container">
@@ -116,13 +119,52 @@ const NavBar = () => {
                 >
                     <ul className="navbar-nav m-auto my-2 text-center">
                         <li className="nav-item">
+                            <Form className="d-flex">
+                                <NavDropdown
+                                    id="nav-dropdown-dark-example"
+                                    title={searchFilter}
+                                    menuVariant="dark"
+                                >
+                                    <NavDropdown.Item
+                                        href="#action/3.1"
+                                        onClick={() =>
+                                            setSearchFilter("By Brand")
+                                        }
+                                    >
+                                        By Brand
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item
+                                        href="#action/3.2"
+                                        onClick={() =>
+                                            setSearchFilter("By Category")
+                                        }
+                                    >
+                                        By Category
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                                <Form.Control
+                                    type="search"
+                                    placeholder="Search"
+                                    className="me-2"
+                                    aria-label="Search"
+                                />
+
+                                <Button variant="outline-secondary">
+                                    <i
+                                        class="fa fa-search"
+                                        aria-hidden="true"
+                                    ></i>
+                                </Button>
+                            </Form>
+                        </li>
+                        <li className="nav-item">
                             <NavLink className="nav-link" to="/">
-                                Home{" "}
+                                About Us{" "}
                             </NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/item">
-                                Items
+                                Contact
                             </NavLink>
                         </li>
                     </ul>

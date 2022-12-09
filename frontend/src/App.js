@@ -12,8 +12,30 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Item from "./pages/item";
 import CartProvider from "./components/cartContext";
+import cookie from "react-cookie";
+import jscookie from "js-cookie";
+
+import axios from "axios";
 
 class App extends Component {
+    componentDidMount() {
+        const port = "3333";
+        const apiUrl = `http://localhost:${port}/api/home`;
+
+        const f = async () => {
+            axios.defaults.withCredentials = true;
+            const response = await axios.post(apiUrl, {
+                withCredentials: true,
+                credentials: "include",
+            });
+            console.log(response.data);
+        };
+
+        f();
+
+        const jwtcookie = { jwt: jscookie.get("jwt") };
+        console.log("-->" + jwtcookie.jwt);
+    }
 
     render() {
         return (

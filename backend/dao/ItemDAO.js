@@ -12,6 +12,15 @@ export const getBestSellers = async (req, res) => {
   }
 };
 
+export const getAllItems= async(req,res)=>{
+  try{
+    const response= await Item.find({});
+    return response
+  }catch(error){
+    throw new Error(error)
+  }
+}
+
 
 export const averageRatings = async(req,res)=>{
   try{

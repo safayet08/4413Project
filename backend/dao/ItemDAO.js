@@ -135,6 +135,8 @@ export const getNumReviews = async(req,res)=>{
 
 export const filter =async(req,res)=>{
   try{
+    const filterby=req.body.filterby
+    const filterTerm= req.body.filterTerm
    }catch(error){
     throw new Error(error);
   }

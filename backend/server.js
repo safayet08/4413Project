@@ -7,17 +7,11 @@ import orderRouter from "./routes/orderRoute.js"
 
 import homeRouter from "./routes/homeRoute.js"
 import cartRouter from "./routes/cartRoute.js"
-import cookieparser from 'cookie-parser'
-import JWTVerify from "./middleware/JWTVerify.js"
 import bcrypt from 'bcrypt'
 import bcryptjs from 'bcryptjs'
 import https from 'https'
 import fs from 'fs'
-import itemRouter from "./routes/itemRoute.js"
-import orderRouter from "./routes/orderRoute.js"
 import cors from 'cors'
-import homeRouter from "./routes/homeRoute.js"
-import cartRouter from "./routes/cartRoute.js"
 import cookieparser from 'cookie-parser'
 import JWTVerify from "./middleware/JWTVerify.js"
 import {notFound, errorHandler} from './middleware/errorMiddleware.js'

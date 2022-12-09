@@ -3,6 +3,8 @@ import User from '../models/userModel.js'
 import UserDAO from '../dao/UserDAO.js'
 import e from 'express'
 
+const port = '5000'
+
 // User Route to access user data, log users in, sign users up etc etc
 const router= express.Router()
 
@@ -15,7 +17,7 @@ router.post('/', async(req,res)=>{
     // once the cookie has expired, then delete user from DB??
     if (!cookies?.jwt) {
         // update to properly redirect without hard setting values
-        res.redirect(307, 'http://localhost:5000/api/user/addUser?createCheck=false');
+        res.redirect(307, 'http://localhost:' + port + '/api/user/addUser?createCheck=false');
 
     }
     else {
@@ -34,7 +36,7 @@ router.post('/', async(req,res)=>{
 
             res.clearCookie('jwt', { httpOnly: true, sameSite: 'None'});
 
-            res.redirect(307, 'http://localhost:5000/api/user/login?loginCheck=false&email=' + user.email + '&password=true');
+            res.redirect(307, 'http://localhost:'+port+'/api/user/login?loginCheck=false&email=' + user.email + '&password=true');
 
         }
         else {

@@ -34,6 +34,15 @@ const NavBar = ({user}) => {
         0
     );
 
+<<<<<<< HEAD
+=======
+    //let navigate = useNavigate();
+    const routeChange = () => {
+        let path = `/`;
+        navigate(path);
+    };
+
+>>>>>>> OrderRoute
     const orderSummary = () => {
         const shippingCost = 30;
         return (

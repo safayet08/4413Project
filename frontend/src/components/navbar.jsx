@@ -6,16 +6,28 @@ import { NavLink } from "react-router-dom";
 import { CartContext } from "./cartContext";
 import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
+import {useRef} from 'react';
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
     const cart = useContext(CartContext);
+    const navigate = useNavigate();
+
+    const textFieldRef= useRef(null)
+    const filterFieldRef= useRef(null)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const handleClick=(e)=>{
-        console.log(e)
+        // console.log(textFieldRef.current.value)
+        // console.log(searchFilter)
+        const query= textFieldRef.current.value
+        const filter= searchFilter==="Filter" ? "name" : searchFilter==="By Brand"? "brand" : "category"
+        
+        navigate(`/search?query=${query}&filter=${filter}`)
+
     }
     const productsCount = cart.items.reduce(
         (sum, product) => sum + product.quantity,
@@ -128,6 +140,7 @@ const NavBar = () => {
                                     id="nav-dropdown-dark-example"
                                     title={searchFilter}
                                     menuVariant="dark"
+                                    ref={filterFieldRef}
                                 >
                                     <NavDropdown.Item
                                         onClick={() =>
@@ -143,21 +156,25 @@ const NavBar = () => {
                                     >
                                         By Category
                                     </NavDropdown.Item>
+
+
                                 </NavDropdown>
                                 <Form.Control
                                     type="search"
                                     placeholder="Search"
                                     className="me-2"
                                     aria-label="Search"
-                                    onClick={handleClick}
+                                    ref={textFieldRef}
                                 />
 
-                                <Button variant="outline-secondary">
+                                <Button onClick={handleClick} variant="outline-secondary">
                                     <i 
 
                                         className="fa fa-search"
                                         aria-hidden="true"
                                     ></i>
+                                                                        
+
                                 </Button>
                             </Form>
                         </li>

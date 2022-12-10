@@ -143,8 +143,7 @@ export const filter = async (req, res) => {
   try {
     const colname = req.body.colname;
     const searchString = req.body.searchString;
-
-    if (!colname || !searchString) {
+    if (!colname==null || !searchString) {
       return await getBestSellers(req, res);
     }
 

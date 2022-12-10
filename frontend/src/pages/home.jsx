@@ -1,13 +1,24 @@
 import ItemList from "../components/itemList";
-import { useEffect } from "react";
-const Home = ({searchQuery}) => {
+import { useEffect,useState } from "react";
+import { useSearchParams } from 'react-router-dom';
+
+const Home = () => {
+    const [searchParams] = useSearchParams();
+    const [filterQuery, setFilterQuery]= useState();
+    const [filterCategory, setFilterCategory]= useState();
     useEffect(()=>{
-        console.log(process.env.port)
-    },[])
+        setFilterCategory(searchParams.get("filter"))
+        setFilterQuery(searchParams.get("query"))
+    },[searchParams])
+
+
+
+
 
     return (
         <>
-            <ItemList searchQuery={searchQuery}/>
+
+            <ItemList filterQuery={filterQuery} filterCategory={filterCategory}/>
         </>
     );
 };

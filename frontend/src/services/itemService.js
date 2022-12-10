@@ -10,15 +10,24 @@ function itemUrl(id) {
     return `${apiEndpoint}/${id}`;
 }
 
-export async function getItems() {
+export async function getItems(filterCategory,filterQuery) {
     const bestSellerRoute = "/get/filter";
-    const response = await axios.get(apiUrl + bestSellerRoute, {
+    console.log("filterCategory: " + filterCategory)
+    console.log("filterQuery: " + filterQuery)    
+    console.log(apiUrl + bestSellerRoute)
+    const body={
+            "colname":filterCategory,
+            "searchString":filterQuery
+        }
+    const response = await axios.post(apiUrl + bestSellerRoute, 
+      body ,{
         headers: {
             Accept: "application/json",
             "Access-Control-Allow-Origin": true,
-        },
-        params: { trophies: true },
-    });
+        }},
+
+       { params: { trophies: true }},
+    );
     console.log(response.data.data)
     return response.data.data;
 }

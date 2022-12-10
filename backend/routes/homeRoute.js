@@ -3,7 +3,7 @@ import User from "../models/userModel.js";
 import UserDAO from "../dao/UserDAO.js";
 import e from "express";
 
-const port = "3333";
+const port = "5000";
 
 // User Route to access user data, log users in, sign users up etc etc
 const router = express.Router();

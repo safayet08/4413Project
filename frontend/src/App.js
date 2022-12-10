@@ -45,6 +45,8 @@ class App extends Component {
                 <main className="container">
                     <Routes>
                         <Route exact path="/" element={<Home />} />
+                        <Route  path="/search" element={<Home />} />
+                        
                         <Route path="/register" element={<RegisterForm />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/item/:_id" element={<Item />} />

@@ -132,3 +132,16 @@ export const getNumReviews = async(req,res)=>{
     }
     
 }
+export const filter= async(req,res)=>{
+    try{
+        const response= await ItemDAO.filter(req,res)
+        res.json(response)
+    }catch(err){
+        console.log(err)
+        res.status(404)
+        res.json({
+            message:err.message,
+            stack: process.env.NODE_ENV==='production'? null: err.stack,
+        })
+    }
+}

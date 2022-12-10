@@ -135,8 +135,31 @@ export const getNumReviews = async(req,res)=>{
 
 export const filter =async(req,res)=>{
   try{
-    const filterby=req.body.filterby
-    const filterTerm= req.body.filterTerm
+    const colname= req.body.colname
+    const searchString= req.body.searchString
+    
+    const r=  colname.toLowerCase()=="name"? await Item.find({
+      $or:[
+        {[colname]: {$regex:searchString, $options:"i"}},
+
+
+        {description: {$regex:searchString, $options:"i"}},
+      ]
+    }) : await Item.find({
+      $or:[
+        {[colname]: {$regex:searchString, $options:"i"}},
+
+      ]
+    })
+    const response= {
+      stats:{
+        length: r.length
+      },
+      data:r
+
+    }
+    return response
+
    }catch(error){
     throw new Error(error);
   }

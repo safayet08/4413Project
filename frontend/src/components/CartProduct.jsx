@@ -4,9 +4,10 @@ import { getItem } from "../services/fakeItemService";
 
 function CartProduct(props) {
     const cart = useContext(CartContext);
-    const id = props.id;
     const quantity = props.quantity;
-    const item = getItem(id);
+    const item = props.item;
+    const id= item._id
+
 
     return (
         <div key={item.id}>
@@ -44,7 +45,7 @@ function CartProduct(props) {
 
                         <button
                             className="btn px-3"
-                            onClick={() => cart.addOneToCart(item._id)}
+                            onClick={() => cart.addOneToCart(item)}
                         >
                             <i className="fa fa-plus"></i>
                         </button>

@@ -40,7 +40,7 @@ const Item = (props) => {
                     </Link>
                     <button
                         className="btn btn-warning m-1"
-                        onClick={() => cart.addOneToCart(item._id)}
+                        onClick={() => cart.addOneToCart(item)}
                     >
                         Add to Cart
                     </button>

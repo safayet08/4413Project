@@ -12,8 +12,8 @@ function itemUrl(id) {
 
 export async function getItems(filterCategory,filterQuery) {
     const bestSellerRoute = "/get/filter";
-    console.log("filterCategory: " + filterCategory)
-    console.log("filterQuery: " + filterQuery)    
+    // console.log("filterCategory: " + filterCategory)
+    // console.log("filterQuery: " + filterQuery)    
     console.log(apiUrl + bestSellerRoute)
     const body={
             "colname":filterCategory,
@@ -33,6 +33,7 @@ export async function getItems(filterCategory,filterQuery) {
 }
 export async function getItem(itemId) {
     const itemRoute = `/${itemId}`;
+    console.log(apiUrl + itemRoute)
     const response = await axios.get(apiUrl + itemRoute);
 
     return response.data;

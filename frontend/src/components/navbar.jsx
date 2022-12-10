@@ -29,6 +29,7 @@ const NavBar = ({ user }) => {
         navigate(`/search?query=${query}&filter=${filter}`)
 
     }
+    // console.log(cart.items)
     const productsCount = cart.items.reduce(
         (sum, product) => sum + product.quantity,
         0
@@ -100,7 +101,7 @@ const NavBar = ({ user }) => {
                         <>
                             {cart.items.map((currentProduct, index) => (
                                 <CartProduct
-                                    id={currentProduct.id}
+                                    item={currentProduct.item}
                                     quantity={currentProduct.quantity}
                                     key={index}
                                 />

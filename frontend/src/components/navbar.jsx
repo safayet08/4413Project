@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { CartContext } from "./cartContext";
 import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
@@ -17,6 +17,12 @@ const NavBar = ({ user }) => {
         (sum, product) => sum + product.quantity,
         0
     );
+
+    let navigate = useNavigate();
+    const routeChange = () => {
+        let path = `/`;
+        navigate(path);
+    };
 
     const orderSummary = () => {
         const shippingCost = 30;
@@ -167,15 +173,16 @@ const NavBar = ({ user }) => {
                         </li>
                     </ul>
                     <div className="buttons text-center">
-                        {console.log(user)}
-                        {!user && (
+                        {console.log("inside navbar")}
+                        {console.log(user.name)}
+                        {!user.name && (
                             <>
                                 <NavLink
                                     to="/login"
                                     className="btn btn-dark m-2"
+                                    onClick={routeChange}
                                 >
-                                    <i className="fa fa-sign-in mr-1"></i>{" "}
-                                    Loginn
+                                    <i className="fa fa-sign-in mr-1"></i> Login
                                 </NavLink>
                                 <NavLink
                                     to="/register"
@@ -186,7 +193,7 @@ const NavBar = ({ user }) => {
                                 </NavLink>
                             </>
                         )}
-                        {user && (
+                        {user.name && (
                             <>
                                 <NavLink to="/" className="btn btn-dark m-2">
                                     {user.name}

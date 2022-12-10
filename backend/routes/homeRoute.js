@@ -28,7 +28,6 @@ router.post("/", async (req, res) => {
         );
     } else {
         const refreshToken = cookies.jwt;
-
         const user = await UserDAO.getUser("refreshToken", refreshToken);
 
         if (!user) {

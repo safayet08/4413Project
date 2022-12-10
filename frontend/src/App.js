@@ -20,14 +20,14 @@ class App extends Component {
     state = {};
 
     getRefreshToken = async () => {
-        const port = "3333";
+        const port = "5000";
         const apiUrl = `http://localhost:${port}/api/home`;
         axios.defaults.withCredentials = true;
         const response = await axios.post(apiUrl, {
             withCredentials: true,
             credentials: "include",
         });
-        console.log(response.data);
+        // console.log(response.data);
     };
 
     componentDidMount() {
@@ -37,9 +37,10 @@ class App extends Component {
 
         try {
             const accessToken = localStorage.getItem("accToken");
+            // console.log(" access token " +accessToken)
             const user = jwtDecode(accessToken).UserInfo;
             this.setState(user);
-            console.log(user);
+            // console.log(user);
         } catch (ex) {
             console.log("no access token");
         }

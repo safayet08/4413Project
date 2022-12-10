@@ -2,22 +2,32 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "../components/common/form";
 import { Link } from "react-router-dom";
-
+import { loginService } from "../services/userService";
 class LoginForm extends Form {
     state = {
-        data: { username: "", password: "" },
+        data: { Username: "", Password: "" },
         errors: {},
     };
 
     schema = {
-        username: Joi.string().required().label("Username"),
-        password: Joi.string().required().label("Password"),
+        Username: Joi.string().required().label("Username"),
+        Password: Joi.string().required().label("Password"),
     };
 
-    doSubmit = () => {
-        console.log(
-            `Submitted: ${this.state.data.username} and ${this.state.data.password}`
-        );
+    doSubmit = async () => {
+        try {
+            const { data } = this.state;
+            const response = await loginService(data.Username, data.Password);
+            const accessToken = response.data.user;
+            console.log(">" + accessToken);
+            localStorage.setItem("accToken", accessToken);
+        } catch (ex) {
+            if (ex.response && ex.response.status === 401) {
+                const errors = { ...this.state.errors };
+                errors.Username = "Incorrect Email or Password";
+                this.setState({ errors });
+            }
+        }
     };
 
     render() {
@@ -30,14 +40,14 @@ class LoginForm extends Form {
                         <div className="col-md-4 col-lg-4 col-sm-8 mx-auto">
                             <form onSubmit={this.handleSubmit}>
                                 {this.renderInput(
-                                    "username",
+                                    "Username",
                                     "Email Address",
                                     "text",
                                     "name@example.com"
                                 )}
                                 {}
                                 {this.renderInput(
-                                    "password",
+                                    "Password",
                                     "Password",
                                     "password",
                                     "Password"

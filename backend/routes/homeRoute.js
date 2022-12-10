@@ -40,17 +40,16 @@ router.post("/", async (req, res) => {
 
         if (user.type == "user") {
             //res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
-            console.log("User found, login and send through cart.");
-            res.clearCookie("jwt", { httpOnly: true, sameSite: "Strict" });
-
-            res.redirect(
-                307,
-                "http://localhost:" +
-                    port +
-                    "/api/user/login?loginCheck=false&email=" +
-                    user.email +
-                    "&password=true"
-            );
+            // console.log("User found, login and send through cart.");
+            // res.clearCookie("jwt", { httpOnly: true, sameSite: "Strict" });
+            // res.redirect(
+            //     307,
+            //     "http://localhost:" +
+            //         port +
+            //         "/api/user/login?loginCheck=false&email=" +
+            //         user.email +
+            //         "&password=true"
+            // );
         } else {
             console.log("User found, persist cart through getCart call.");
             res.status(201).json({

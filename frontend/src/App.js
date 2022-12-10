@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
+import jwtDecode from "jwt-decode";
 import Checkout from "./pages/checkout";
 import Home from "./pages/home";
 import NavBar from "./components/navbar";
@@ -12,36 +13,47 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Item from "./pages/item";
 import CartProvider from "./components/cartContext";
-import cookie from "react-cookie";
-import jscookie from "js-cookie";
 
 import axios from "axios";
 
 class App extends Component {
-    componentDidMount() {
+    state = {};
+
+    getRefreshToken = async () => {
         const port = "3333";
         const apiUrl = `http://localhost:${port}/api/home`;
+        axios.defaults.withCredentials = true;
+        const response = await axios.post(apiUrl, {
+            withCredentials: true,
+            credentials: "include",
+        });
+        console.log(response.data);
+    };
 
-        const f = async () => {
-            axios.defaults.withCredentials = true;
-            const response = await axios.post(apiUrl, {
-                withCredentials: true,
-                credentials: "include",
-            });
-            console.log(response.data);
-        };
+    componentDidMount() {
+        this.getRefreshToken();
+        // const jwtRefreshcookie = { jwt: jscookie.get("jwt") };
+        // console.log("-->" + jwtRefreshcookie.jwt);
 
-        f();
-
-        const jwtcookie = { jwt: jscookie.get("jwt") };
-        console.log("-->" + jwtcookie.jwt);
+        try {
+            const accessToken = localStorage.getItem("accToken");
+            const user = jwtDecode(accessToken).UserInfo;
+            this.setState(user);
+            console.log(user);
+        } catch (ex) {
+            console.log("no access token");
+        }
     }
 
+    f() {}
+
     render() {
+        console.log("Rendering-->");
+        console.log(this.state);
         return (
             <CartProvider>
                 <ToastContainer />
-                <NavBar />
+                <NavBar user={this.state} />
                 <main className="container">
                     <Routes>
                         <Route exact path="/" element={<Home />} />

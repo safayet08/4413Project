@@ -8,7 +8,7 @@ import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
     const cart = useContext(CartContext);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -167,13 +167,42 @@ const NavBar = () => {
                         </li>
                     </ul>
                     <div className="buttons text-center">
-                        <NavLink to="/login" className="btn btn-dark m-2">
-                            <i className="fa fa-sign-in mr-1"></i> Login
-                        </NavLink>
-                        <NavLink to="/register" className="btn btn-dark m-2">
-                            <i className="fa fa-user-plus mr-1"></i> Register
-                        </NavLink>
-
+                        {console.log(user)}
+                        {!user && (
+                            <>
+                                <NavLink
+                                    to="/login"
+                                    className="btn btn-dark m-2"
+                                >
+                                    <i className="fa fa-sign-in mr-1"></i>{" "}
+                                    Loginn
+                                </NavLink>
+                                <NavLink
+                                    to="/register"
+                                    className="btn btn-dark m-2"
+                                >
+                                    <i className="fa fa-user-plus mr-1"></i>{" "}
+                                    Register
+                                </NavLink>
+                            </>
+                        )}
+                        {user && (
+                            <>
+                                <NavLink to="/" className="btn btn-dark m-2">
+                                    {user.name}
+                                </NavLink>
+                                <NavLink
+                                    to="/register"
+                                    className="btn btn-dark m-2"
+                                >
+                                    <i
+                                        class="fa fa-sign-out"
+                                        aria-hidden="true"
+                                    ></i>{" "}
+                                    Logout
+                                </NavLink>
+                            </>
+                        )}
                         <Button
                             className="btn btn-dark m-2"
                             onClick={handleShow}

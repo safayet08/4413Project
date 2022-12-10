@@ -3,24 +3,28 @@ import Joi from "joi-browser";
 import Form from "../components/common/form";
 import { Link } from "react-router-dom";
 
+import { registerService } from "../services/userService";
+
 class RegisterForm extends Form {
     state = {
-        data: { username: "", password: "", name: "" },
+        data: { Username: "", Password: "", Name: "" },
         errors: {},
     };
 
     schema = {
-        name: Joi.string().required().label("Full Name"),
-        username: Joi.string().required().email().label("Username/Email"),
-        password: Joi.string().required().min(5).label("Password"),
+        Name: Joi.string().required().label("Full Name"),
+        Username: Joi.string().required().email().label("Username/Email"),
+        Password: Joi.string().required().min(5).label("Password"),
     };
 
-    doSubmit = () => {
-        // Call the server
-        console.log(
-            `Submitted: ${this.state.data.username}, ${this.state.data.password}` +
-                `, ${this.state.data.name}`
+    doSubmit = async () => {
+        const response = await registerService(
+            this.state.data.Name,
+            this.state.data.Username,
+            this.state.data.Password
         );
+
+        console.log(response.data);
     };
 
     render() {
@@ -33,31 +37,31 @@ class RegisterForm extends Form {
                         <div className="col-md-4 col-lg-4 col-sm-8 mx-auto">
                             <form onSubmit={this.handleSubmit}>
                                 {this.renderInput(
-                                    "name",
+                                    "Name",
                                     "Your Full Name",
                                     "text",
                                     "Full Name"
                                 )}
                                 {this.renderInput(
-                                    "username",
+                                    "Username",
                                     "Email Address",
                                     "text",
                                     "name@example.com"
                                 )}
                                 {this.renderInput(
-                                    "password",
+                                    "Password",
                                     "Password",
                                     "password",
                                     "Password"
                                 )}
                                 <div className="my-3">
                                     <p>
-                                        New Here?{" "}
+                                        Already have an account?{" "}
                                         <Link
-                                            to="/register"
+                                            to="/login"
                                             className="text-decoration-underline text-info"
                                         >
-                                            Register
+                                            Login
                                         </Link>{" "}
                                     </p>
                                 </div>

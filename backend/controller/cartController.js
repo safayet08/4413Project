@@ -21,15 +21,17 @@ const addCart = async(req, res) => {
 
     const refreshToken = cookies.jwt;
 
-    const foundUser = await User.findOne({refreshToken: refreshToken }).exec();
+    const foundUser = await User.findOne({ refreshToken }).exec();
 
     if (!foundUser) {
-        res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-        //res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
+        //res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+        res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
         return res.sendStatus(204);
     }
 
     const owner = foundUser._id;
+
+    console.log(owner)
 
     const itemName = req.body.name;
 
@@ -37,7 +39,7 @@ const addCart = async(req, res) => {
 
     try {
         const cart = await CartDAO.getCart(owner);
-        const item = await Item.findOne({ name: itemName });
+        const item = await Item.findOne({ Name: itemName });
         if (!item) {
             res.status(404).send({ message: "item not found" });
             return;
@@ -75,7 +77,7 @@ const addCart = async(req, res) => {
         {
             //no cart exists, create one
             const newCartData= {
-                owner:owner,
+                _id:owner,
                 items: [{ itemId, name, quantity, price }],
                 bill: quantity * price,
             }
@@ -103,7 +105,7 @@ const deleteCartItem = async (req, res) => {
 
     const refreshToken = cookies.jwt;
 
-    const foundUser = await User.findOne({refreshToken: refreshToken }).exec();
+    const foundUser = await User.findOne({ refreshToken }).exec();
 
     if (!foundUser) {
         //res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
@@ -152,7 +154,7 @@ const deleteCart = async (req, res) => {
 
     const refreshToken = cookies.jwt;
 
-    const foundUser = await User.findOne({refreshToken: refreshToken }).exec();
+    const foundUser = await User.findOne({ refreshToken }).exec();
 
     if (!foundUser) {
         //res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
@@ -164,7 +166,7 @@ const deleteCart = async (req, res) => {
     
     try 
     {
-        const result = await Cart.deleteOne({ owner: owner });
+        const result = await Cart.deleteOne({ owner });
         if (result.deletedCount == 1) {
             res.sendStatus(200);
         }

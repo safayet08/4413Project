@@ -10,7 +10,7 @@ import {useRef} from 'react';
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = ({user}) => {
+const NavBar = ({ user }) => {
     const cart = useContext(CartContext);
     const navigate = useNavigate();
 
@@ -34,15 +34,12 @@ const NavBar = ({user}) => {
         0
     );
 
-<<<<<<< HEAD
-=======
     //let navigate = useNavigate();
     const routeChange = () => {
         let path = `/`;
         navigate(path);
     };
 
->>>>>>> OrderRoute
     const orderSummary = () => {
         const shippingCost = 30;
         return (
@@ -199,13 +196,43 @@ const NavBar = ({user}) => {
                         </li>
                     </ul>
                     <div className="buttons text-center">
-                        <NavLink to="/login" className="btn btn-dark m-2">
-                            <i className="fa fa-sign-in mr-1"></i> Login
-                        </NavLink>
-                        <NavLink to="/register" className="btn btn-dark m-2">
-                            <i className="fa fa-user-plus mr-1"></i> Register
-                        </NavLink>
-
+                        {console.log("inside navbar")}
+                        {console.log(user.name)}
+                        {!user.name && (
+                            <>
+                                <NavLink
+                                    to="/login"
+                                    className="btn btn-dark m-2"
+                                    onClick={routeChange}
+                                >
+                                    <i className="fa fa-sign-in mr-1"></i> Login
+                                </NavLink>
+                                <NavLink
+                                    to="/register"
+                                    className="btn btn-dark m-2"
+                                >
+                                    <i className="fa fa-user-plus mr-1"></i>{" "}
+                                    Register
+                                </NavLink>
+                            </>
+                        )}
+                        {user.name && (
+                            <>
+                                <NavLink to="/" className="btn btn-dark m-2">
+                                    {user.name}
+                                </NavLink>
+                                <NavLink
+                                    to="/register"
+                                    className="btn btn-dark m-2"
+                                >
+                                    <i
+                                        class="fa fa-sign-out"
+                                        aria-hidden="true"
+                                    ></i>{" "}
+                                    Logout
+                                </NavLink>
+                            </>
+                        )}
                         <Button
                             className="btn btn-dark m-2"
                             onClick={handleShow}

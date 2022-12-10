@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import {React, useState, useEffect} from 'react'
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
 
-class Form extends Component {
-    state = {
-        data: {},
-        errors: {},
-    };
+const Form = () => {
 
-    validate = () => {
+    const [data, setData]= useState()
+    const [error, setErrors]= useState()
+    const validate = () => {
         const options = { abortEarly: false };
         const { error } = Joi.validate(this.state.data, this.schema, options);
         if (!error) return null;
@@ -18,38 +16,23 @@ class Form extends Component {
         for (let item of error.details) errors[item.path[0]] = item.message;
         return errors;
     };
-
-    validateProperty = ({ name, value }) => {
+    const validateProperty = ({ name, value }) => {
         const obj = { [name]: value };
         const schema = { [name]: this.schema[name] };
         const { error } = Joi.validate(obj, schema);
         return error ? error.details[0].message : null;
     };
 
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        const errors = this.validate();
-        this.setState({ errors: errors || {} });
+        const errors = validate();
+        setErrors({ errors: errors || {} });
         if (errors) return;
 
-        this.doSubmit();
+        e.doSubmit();
     };
-
-    handleChange = ({ currentTarget: input }) => {
-        const errors = { ...this.state.errors };
-        const errorMessage = this.validateProperty(input);
-        if (errorMessage) errors[input.name] = errorMessage;
-        else delete errors[input.name];
-
-        // Clone the data state, get the value typed in, set data to new state
-        const data = { ...this.state.data };
-        data[input.name] = input.value;
-
-        this.setState({ data, errors });
-    };
-
-    renderButton(label) {
+    const renderButton=(label) =>{
         return (
             <button
                 className="my-2 mx-auto btn btn-dark"
@@ -61,7 +44,7 @@ class Form extends Component {
         );
     }
 
-    renderSelect(name, label, options) {
+    const  renderSelect=(name, label, options)=> {
         const { data, errors } = this.state;
 
         return (
@@ -74,9 +57,10 @@ class Form extends Component {
                 error={errors[name]}
             />
         );
+    
+    
     }
-
-    renderInput(name, label, type, placeholder) {
+ const renderInput=(name, label, type, placeholder)=> {
         const { data, errors } = this.state;
         return (
             <Input
@@ -93,6 +77,4 @@ class Form extends Component {
     }
 }
 
-export default Form;
-
-
+export default Form

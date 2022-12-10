@@ -1,13 +1,13 @@
 import ItemList from "../components/itemList";
 import { useEffect } from "react";
-const Home = () => {
+const Home = ({searchQuery}) => {
     useEffect(()=>{
         console.log(process.env.port)
     },[])
 
     return (
         <>
-            <ItemList />
+            <ItemList searchQuery={searchQuery}/>
         </>
     );
 };

@@ -2,7 +2,7 @@ import Item from "./itemCard";
 import * as ItemService from "../services/fakeItemService";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-const ItemList = () => {
+const ItemList = ({searchQuery}) => {
   // const [items, setItems] = useState(getItems());
 
   // const [filters] = useState(() => {
@@ -20,12 +20,13 @@ const ItemList = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
-      const a = await ItemService.getItems();
+      const a = await ItemService.getItems(searchQuery);
       setItems(a);
       setDisplayedItems(a)
       console.log(a);
     };
     fetchItems();
+
   }, []);
 
   useEffect(() => {

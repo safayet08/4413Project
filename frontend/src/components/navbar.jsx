@@ -13,6 +13,10 @@ const NavBar = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleClick=(e)=>{
+        console.log(e)
+    }
     const productsCount = cart.items.reduce(
         (sum, product) => sum + product.quantity,
         0
@@ -145,10 +149,12 @@ const NavBar = () => {
                                     placeholder="Search"
                                     className="me-2"
                                     aria-label="Search"
+                                    onClick={handleClick}
                                 />
 
                                 <Button variant="outline-secondary">
-                                    <i
+                                    <i 
+
                                         className="fa fa-search"
                                         aria-hidden="true"
                                     ></i>

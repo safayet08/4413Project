@@ -1,7 +1,7 @@
 import http from "./httpService";
 //import { apiUrl } from "../config.json";
 import axios from "axios";
-const port = "3333";
+const port = "5000";
 
 const apiUrl = `http://localhost:${port}/api/item`;
 const apiEndpoint = `${apiUrl}/items`;
@@ -11,7 +11,7 @@ function itemUrl(id) {
 }
 
 export async function getItems() {
-    const bestSellerRoute = "/get/bestSellers";
+    const bestSellerRoute = "/get/filter";
     const response = await axios.get(apiUrl + bestSellerRoute, {
         headers: {
             Accept: "application/json",
@@ -19,8 +19,8 @@ export async function getItems() {
         },
         params: { trophies: true },
     });
-    // console.log(response.data)
-    return response.data;
+    console.log(response.data.data)
+    return response.data.data;
 }
 export async function getItem(itemId) {
     const itemRoute = `/${itemId}`;

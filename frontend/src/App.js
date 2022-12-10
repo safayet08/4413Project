@@ -19,9 +19,9 @@ import axios from "axios";
 
 class App extends Component {
     componentDidMount() {
-        const port = "3333";
+        const port = "5000";
         const apiUrl = `http://localhost:${port}/api/home`;
-
+        console.log(apiUrl)
         const f = async () => {
             axios.defaults.withCredentials = true;
             const response = await axios.post(apiUrl, {

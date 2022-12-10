@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { useState, useContext } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { CartContext } from "./cartContext";
 import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
@@ -34,7 +34,7 @@ const NavBar = ({ user }) => {
         0
     );
 
-    let navigate = useNavigate();
+    //let navigate = useNavigate();
     const routeChange = () => {
         let path = `/`;
         navigate(path);

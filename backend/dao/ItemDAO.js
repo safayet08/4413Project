@@ -63,10 +63,13 @@ export const addReview = async (req, res) => {
     const itemId = req.body.itemId;
     const userId = review.user;
     const item = await Item.findById(itemId);
+    if(!item){
+      throw new Error("item does not exist")
+    }
     if (review.rating > 5 || review.rating < 0) {
       throw new Error("Can't add raing over 5 or less than 0");
     }
-
+    console.log(item)
     const reviewExists = item.reviews.find(
       (oldReview) => userId == oldReview.user
     );

@@ -20,7 +20,7 @@ const importItems = async () => {
         category: serverItem.category,
         brand:serverItem.brand,
         price: serverItem.price,
-        rating: null,
+        reviews: [],
         stock:serverItem.stock,
         image:serverItem.thumbnail
     }

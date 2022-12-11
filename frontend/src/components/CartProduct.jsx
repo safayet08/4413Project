@@ -36,7 +36,7 @@ function CartProduct(props) {
                     <div className="d-flex mb-2" style={{ maxWidth: "300px" }}>
                         <button
                             className="btn px-3"
-                            onClick={() => cart.deleteFromCart(id)}
+                            onClick={() => cart.removeOneFromCart(id)}
                         >
                             <i className="fa fa-minus"></i>
                         </button>

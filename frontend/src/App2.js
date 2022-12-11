@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useEffect,useState } from "react";
+import { useEffect,useState ,useContext} from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -13,23 +13,27 @@ import RegisterForm from "./pages/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Item from "./pages/item";
+import { CartContext } from "./components/cartContext";
 import CartProvider from "./components/cartContext";
-
 import axios from "axios";
 
 const App2 = () => {
-
+  const port = "5000";
     const [user, setUser]= useState([])
+    const cartContext = useContext(CartContext)
   const getRefreshToken = async () => {
-    const port = "5000";
-    const apiUrl = `http://localhost:${port}/api/home`;
-    axios.defaults.withCredentials = true;
-    const response = await axios.post(apiUrl, {
-      withCredentials: true,
-      credentials: "include",
-    });
+      const apiUrl = `http://localhost:${port}/api/home`;
+      axios.defaults.withCredentials = true;
+      const response = await axios.post(apiUrl, {
+          withCredentials: true,
+          credentials: "include",
+      });
     // console.log(response.data);
   };
+  const getUserCart = async ()=>{
+    cartContext.getCartFromServer()
+
+  }
 
   useEffect(()=>{
     getRefreshToken();
@@ -45,13 +49,19 @@ const App2 = () => {
     } catch (ex) {
         console.log("no access token");
     }
+
+    getUserCart()
   },[])
+
+  const changeUser= (user)=>{
+    setUser(user)
+  }
 
 
   return (
     <CartProvider>
         <ToastContainer />
-        <NavBar user={user} />
+        <NavBar user={user} changeUser={changeUser}/>
         <main className="container">
             <Routes>
                 <Route exact path="/" element={<Home />} />

@@ -44,9 +44,9 @@ const Item = () => {
                         >
                             Add to Cart
                         </button>
-                        <Link to="/cart" className="btn btn-dark mx-3">
+                        {/* <Link to="/cart" className="btn btn-dark mx-3"> */}
                             Go to Cart
-                        </Link>
+                        {/* </Link> */}
                     </div>
                 </div>
             </div>

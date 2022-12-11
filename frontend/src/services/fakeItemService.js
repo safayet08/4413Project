@@ -112,7 +112,7 @@ function shuffle(array) {
 const items = shuffle(listOfItems);
 
 export async function getItems(filterCategory,filterQuery) {
-    console.log("Filter Category" , filterCategory)
+    // console.log("Filter Category" , filterCategory)
     return await itemService.getItems(filterCategory,filterQuery);
 }
 

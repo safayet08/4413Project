@@ -6,20 +6,28 @@ import { NavLink } from "react-router-dom";
 import { CartContext } from "./cartContext";
 import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
+import axios from "axios";
 import {useRef} from 'react';
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = ({ user }) => {
+const NavBar = ({ user,changeUser }) => {
     const cart = useContext(CartContext);
     const navigate = useNavigate();
-
+    const port=5000
     const textFieldRef= useRef(null)
     const filterFieldRef= useRef(null)
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleLogout= async ()=>{
+        changeUser([])
+        const apiUrl=`http://localhost:${port}/api/user/logout`
+        const response= await axios.get(apiUrl, {withCredentials:true})
+        localStorage.clear();
+        window.location.reload(false);
 
+    }   
     const handleClick=(e)=>{
         // console.log(textFieldRef.current.value)
         // console.log(searchFilter)
@@ -223,8 +231,10 @@ const NavBar = ({ user }) => {
                                     {user.name}
                                 </NavLink>
                                 <NavLink
-                                    to="/register"
+                                    to="/"
                                     className="btn btn-dark m-2"
+                                    onClick={handleLogout}
+
                                 >
                                     <i
                                         class="fa fa-sign-out"

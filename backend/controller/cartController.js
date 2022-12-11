@@ -1,15 +1,19 @@
 import express from 'express'
 import Cart from '../models/cartModel.js'
 import User from '../models/userModel.js'
+import UserDAO from "../dao/UserDAO.js";
 import Item from '../models/itemModel.js'
 import CartDAO from '../dao/cartDAO.js'
 
 const getCart = async(req, res) => {
-    if (!req?.query?.email) return res.status(400).json({ "message": 'Email required' });
-    const owner = req.user._id
-    const cart = await CartDAO.getCart(owner);
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204); //No content
+
+    const refreshToken = cookies.jwt;
+    const owner= await UserDAO.getUser( "refreshToken", refreshToken)
+    const cart = await CartDAO.getCart(owner._id);
     if(!cart) {
-        return res.status(204).json({ 'message': `User ID ${req.params.id} not found` });
+        return res.status(204).json({ 'message': `User ID ${refreshToken} not found` });
     }
     res.json(cart)
 }
@@ -31,24 +35,25 @@ const addCart = async(req, res) => {
 
     const owner = foundUser._id;
 
-    console.log(owner)
+    // console.log(owner)
 
-    const itemName = req.body.name;
+    const itemId = req.body.itemId;
+    // console.log(req.body)
 
     const quantity = req.body.quantity;
 
     try {
         const cart = await CartDAO.getCart(owner);
-        const item = await Item.findOne({ Name: itemName });
+        const item = await Item.findById(itemId);
         if (!item) {
             res.status(404).send({ message: "item not found" });
             return;
         }
 
         const price = item.price;
-        console.log(item)
+        // console.log(item)
         const name = item.name;
-        const itemId = item._id
+        // const itemId = item._id
         //If cart already exists for user,
         if (cart) {
             const itemIndex = cart.items.findIndex((item) => item.itemId ==  itemId);
@@ -59,7 +64,10 @@ const addCart = async(req, res) => {
                 cart.bill = cart.items.reduce((acc, curr) => {
                     return acc + curr.quantity * curr.price;
                 },0)
-                cart.items[itemIndex] = product;
+                    cart.items[itemIndex] = product;
+                    cart.items= cart.items.filter(item=> item.quantity>0)
+
+
                 await cart.save();
                 res.status(200).send(cart);
             } 
@@ -77,10 +85,11 @@ const addCart = async(req, res) => {
         {
             //no cart exists, create one
             const newCartData= {
-                _id:owner,
+                owner:owner,
                 items: [{ itemId, name, quantity, price }],
                 bill: quantity * price,
             }
+            // console.log(newCartData)
             const newCart = await CartDAO.createCart(newCartData)
             /*const newCart = await Cart.create({
                 owner,
@@ -115,12 +124,12 @@ const deleteCartItem = async (req, res) => {
     
     const owner = foundUser._id;
     
-    const itemName = req.body.name;
+    const itemId = req.body.itemId;
     
     try 
     {
-        let cart = await Cart.findOne({ owner });
-        const itemIndex = cart.items.findIndex((item) => item.name == itemName);
+        let cart = await Cart.findOne({ owner:owner });
+        const itemIndex = cart.items.findIndex((item) => item._id == itemId);
         if (itemIndex > -1) {
             let item = cart.items[itemIndex];
             cart.bill -= item.quantity * item.price;

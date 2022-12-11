@@ -71,9 +71,9 @@ const ItemList = ({filterCategory,filterQuery}) => {
             </div>
             <div className="row" key={5}>
                 {displayedItems.map((item) => (
-                    // <Link   to={"/item/" + item._id}>
-                    <Item key={item._id} item={item} />
-                    //   </Link>
+                    // <Link   to={"/item/" + item._id} stlye={{"inline":""}}>
+                        <Item key={item._id} item={item} />
+                    // </Link>
                 ))}
             </div>
         </>

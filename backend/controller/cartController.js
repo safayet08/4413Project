@@ -56,7 +56,7 @@ const addCart = async(req, res) => {
         // const itemId = item._id
         //If cart already exists for user,
         if (cart) {
-            const itemIndex = cart.items.findIndex((item) => item.itemId ==  itemId);
+            const itemIndex = cart.items.findIndex((item) => item.name ==  name);
             //check if product exists or not
             if (itemIndex > -1) {
                 let product = cart.items[itemIndex];
@@ -155,6 +155,7 @@ const deleteCartItem = async (req, res) => {
     }
 };
 
+/*
 const deleteCart = async (req, res) => {
     
     const cookies = req.cookies;
@@ -189,6 +190,6 @@ const deleteCart = async (req, res) => {
        console.log(error);
        res.status(400).send();
     }
-};
+};*/
 
-export default {getCart, addCart, deleteCartItem, deleteCart}
+export default {getCart, addCart, deleteCartItem}

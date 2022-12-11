@@ -30,12 +30,6 @@ const orderSchema = mongoose.Schema({
     required: true,
     default: 0,
   },
-  creditCard: {
-    type: String,
-
-    required: true,
-  },
-
   address: {
     type: String,
     required: true,

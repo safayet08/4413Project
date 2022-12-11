@@ -10,4 +10,17 @@ export const getOrder= async(req,res)=>{
     }
 }
 
+const createOrder = async function(orderData) {
+    const order = await Order.create(orderData);
+    return order;
+}
+
+const getAllOrder = async function() {
+    const orders = await Order.find({});
+    return orders;
+
+}
+
+export default {getOrder, createOrder, getAllOrder}
+
 

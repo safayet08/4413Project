@@ -12,6 +12,11 @@ const createCart = async function(cartData) {
     return cart;
 }
 
+const deleteCart = async function(id) {
+    const result = await Cart.deleteOne({ owner: id });
+    return result;
+}
 
 
-export default {getCart, createCart}
+
+export default {getCart, createCart,deleteCart}

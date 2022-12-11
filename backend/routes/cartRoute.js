@@ -12,6 +12,6 @@ router.post('/addCart', cartCtrl.addCart)
 
 router.delete('/deleteCartItem', cartCtrl.deleteCartItem)
 
-router.delete('/deleteCart', cartCtrl.deleteCart)
+//router.delete('/deleteCart', cartCtrl.deleteCart)
     
 export default router;

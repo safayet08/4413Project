@@ -2,8 +2,9 @@ import express from "express";
 import User from "../models/userModel.js";
 import UserDAO from "../dao/UserDAO.js";
 import e from "express";
+import config from "../config/config.js";
 
-const port = "5000";
+const port = config.PORT;
 
 // User Route to access user data, log users in, sign users up etc etc
 const router = express.Router();

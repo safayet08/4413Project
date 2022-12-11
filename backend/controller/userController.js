@@ -176,8 +176,7 @@ const loginUser = async (req, res) => {
 
         res.cookie("jwt", refreshToken, {
             httpOnly: true,
-            secure: true,
-            sameSite: "None",
+            sameSite: "Strict",
             maxAge: 24 * 60 * 60 * 1000,
         });
 

@@ -1,6 +1,7 @@
 import express from "express";
 
 import Item from "../models/itemModel.js";
+import User from "../models/userModel.js";
 
 export const getBestSellers = async (req, res) => {
   try {
@@ -62,10 +63,17 @@ export const addReview = async (req, res) => {
     const review = req.body.review;
     const itemId = req.body.itemId;
     const userId = review.user;
+    const user= await User.findById(userId)
+
     const item = await Item.findById(itemId);
     if(!item){
       throw new Error("item does not exist")
     }
+    if(!user){
+      throw new Error("user does not exist")
+    }
+
+    const userName= user.name
     if (review.rating > 5 || review.rating < 0) {
       throw new Error("Can't add raing over 5 or less than 0");
     }
@@ -76,7 +84,13 @@ export const addReview = async (req, res) => {
     if (reviewExists) {
       throw new Error("This user already has a review that exists");
     }
-    item.reviews.push(review);
+    const newReview={
+      rating:review.rating,
+      comment: review.comment,
+      user: review.user,
+      userName:  userName
+    }
+    item.reviews.push(newReview);
     await item.save();
     return item;
   } catch (error) {

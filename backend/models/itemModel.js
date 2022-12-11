@@ -8,6 +8,7 @@ const reviewSchema = mongoose.Schema(
         required: true,
         ref: "User",
       },
+      userName:String,
     },
     {
       timestamps: true,

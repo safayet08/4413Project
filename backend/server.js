@@ -49,6 +49,9 @@ connectDB();
 // initialize backend server using express
 const app = express();
 
+// set proxy to trusted, so ipAddress will be sent
+app.set('trust proxy', true)
+
 // set the application to allow for credentials to be passed and allow request origin
 app.use(cors({ credentials: true, origin: true }));
 

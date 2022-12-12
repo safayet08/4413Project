@@ -10,5 +10,8 @@ const router=express.Router()
 // create get method api call for access all sales data
 router.get('/getSales', adminController.getSales)
 
+// create get method api call for access all visit data
+router.get('/getVisits', adminController.getAppUsage)
+
 // export route
 export default router;

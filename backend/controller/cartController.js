@@ -6,7 +6,9 @@ import Item from '../models/itemModel.js'
 
 // import the cart Data Access Object in order to make data calls to the cart DB
 import CartDAO from '../dao/cartDAO.js'
-import cartDAO from "../dao/cartDAO.js";
+
+// import the visit Data Access Object in order to make data calls to the user DB
+import VisitDAO from "../dao/visitDAO.js";
 
 // This function will get the refresh token from the cookie, and use that to look
 // up whether that use has a cart, and if so, send it back to persist.
@@ -24,10 +26,10 @@ const getCart = async(req, res) => {
     const owner= await UserDAO.getUser( "refreshToken", refreshToken)
 
     // if user is not found, then clear cookie and send no-content back
-    if (!foundUser) {
+    /*if (!foundUser) {
         res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
         return res.sendStatus(204);
-    }
+    }*/
 
     // find the cart attached to the user id 
     const cart = await CartDAO.getCart(owner._id);
@@ -77,7 +79,7 @@ const addCart = async(req, res) => {
     try {
 
         // find cart based on the user id from the refresh token
-        const cart = await CartDAO.getCart(owner);
+        let cart = await CartDAO.getCart(owner);
 
         // find the item based on the item id from the request body
         const item = await Item.findById(itemId);
@@ -111,7 +113,7 @@ const addCart = async(req, res) => {
                     cart.items= cart.items.filter(item=> item.quantity>0)
 
 
-                cart = cartDAO.updateCart(cart)
+                cart = CartDAO.updateCart(cart)
                 res.status(200).send(cart);
             } 
             // if item does not appear, add brand new entry to items in cart
@@ -121,7 +123,7 @@ const addCart = async(req, res) => {
                 cart.bill = cart.items.reduce((acc, curr) => {
                     return acc + curr.quantity * curr.price;
                 },0)
-                cart = cartDAO.updateCart(cart)
+                cart = CartDAO.updateCart(cart)
                 res.status(200).send(cart);
             }
         } 
@@ -138,6 +140,21 @@ const addCart = async(req, res) => {
             const newCart = await CartDAO.createCart(newCartData)
 
             return res.status(201).send(newCart);
+        }
+        // This will increment the visit for this user based on ipaddress by 1 if they have not done this yet
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        const visit = await VisitDAO.getVisit(today, req.ip, "Cart Usage")
+        if (visit.length === 0) {
+            const newVisitInfo = {
+                date: today,
+                ipAddress: req.ip,
+                visitType: "Cart Usage"
+            };
+            await VisitDAO.createVisit(newVisitInfo)
         }
     } 
     catch (error) 
@@ -201,7 +218,7 @@ const deleteCartItem = async (req, res) => {
             cart.bill = cart.items.reduce((acc, curr) => {
                 return acc + curr.quantity * curr.price;
             },0)
-            cart = cartDAO.updateCart(cart)
+            cart = CartDAO.updateCart(cart)
             res.status(200).send(cart);
         } 
         // if item is not even in cart, return 404 error.

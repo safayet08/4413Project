@@ -7,6 +7,9 @@ import cartDAO from "../dao/cartDAO.js"
 // import the user Data Access Object in order to make data calls to the user DB
 import userDAO from "../dao/userDAO.js"
 
+// import the visit Data Access Object in order to make data calls to the user DB
+import VisitDAO from "../dao/visitDAO.js";
+
 // This function will place an order for a logged in user based on the cart in the DB
 const placeOrder = async(req,res)=>{
 
@@ -60,6 +63,23 @@ const placeOrder = async(req,res)=>{
         if (result.deletedCount == 1) {
 
             const order = orderDAO.createOrder(newOrderData);
+
+            // increment order count in visit table
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+            today = mm + '/' + dd + '/' + yyyy;
+            const visit = await VisitDAO.getVisit(today, req.ip, "Order")
+            if (visit.length === 0) {
+                const newVisitInfo = {
+                    date: today,
+                    ipAddress: req.ip,
+                    visitType: "Order"
+                };
+                await VisitDAO.createVisit(newVisitInfo)
+            }
+
             res.status(201).json({ success: `Order completed!` });
         }
         // if cart was not found, do not place order

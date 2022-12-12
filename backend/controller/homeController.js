@@ -1,6 +1,9 @@
 // import the user Data Access Object in order to make data calls to the user DB
 import UserDAO from "../dao/UserDAO.js";
 
+// import the visit Data Access Object in order to make data calls to the user DB
+import VisitDAO from "../dao/visitDAO.js";
+
 // import the config file to redirect initial post method
 import config from "../config/config.js";
 
@@ -10,6 +13,22 @@ const port = config.PORT;
 // This function will check whether a cookie exists on the user entering the site, and if not, then send new one
 const enterSite = async (req, res) => {
     const cookies = req.cookies;
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = mm + '/' + dd + '/' + yyyy;
+    const visit = await VisitDAO.getVisit(today, req.ip, "Home Page")
+    if (visit.length === 0) {
+        console.log("made it in")
+        const newVisitInfo = {
+            date: today,
+            ipAddress: req.ip,
+            visitType: "Home Page"
+        };
+        await VisitDAO.createVisit(newVisitInfo)
+    }
 
     // if there is no cookie, assign one and create new user object in DB, assigning random user values for their visit.
     // once the cookie has expired, then delete user from DB??

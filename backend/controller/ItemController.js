@@ -2,11 +2,30 @@ import express from "express";
 
 import Item from "../models/itemModel.js";
 
+// import the visit Data Access Object in order to make data calls to the user DB
+import VisitDAO from "../dao/visitDAO.js";
+
 import * as ItemDAO from "../dao/ItemDAO.js"
+
 export const getItemFromBackend=async(req,res)=>{
     try{
-    const response= await ItemDAO.getItem(req,res)
-    res.json(response)
+        // This will increment the visit for this user based on ipaddress by 1 if they have not done this yet
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        const visit = await VisitDAO.getVisit(today, req.ip, "Item View")
+        if (visit.length === 0) {
+            const newVisitInfo = {
+                date: today,
+                ipAddress: req.ip,
+                visitType: "Item View"
+            };
+            await VisitDAO.createVisit(newVisitInfo)
+        }
+        const response= await ItemDAO.getItem(req,res)
+        res.json(response)
     }catch(err){
         //Not found
         res.status(404)

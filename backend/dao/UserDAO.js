@@ -1,45 +1,65 @@
-import express from 'express'
+// import user data model for accessing user information in the database
 import User from '../models/userModel.js'
-import Cart from '../models/userModel.js'
-import bcrypt from 'bcrypt'
-import randomstring from 'randomstring'
-import jwt from 'jsonwebtoken'
 
+// this method will find a user in the database based on given id, refreshToken or email
 const getUser = async function(valType, userVal) {
 
-    let user;
-    if (valType == "email") {
-        user = await User.findOne({email: userVal}).exec();
-    }
-    else if (valType == "refreshToken") {
-        user = await User.findOne({refreshToken: userVal}).exec();
-    }
-    else if (valType == "userId") {
-        user = await User.findOne({_id: userVal}).exec();
-    }
+    try {
+        let user;
+        if (valType == "email") {
+            user = await User.findOne({email: userVal}).exec();
+        }
+        else if (valType == "refreshToken") {
+            user = await User.findOne({refreshToken: userVal}).exec();
+        }
+        else if (valType == "userId") {
+            user = await User.findOne({_id: userVal}).exec();
+        }
 
-    return user;
+        return user;
+    }
+    catch(error){
+        throw new Error(error);
+    }
 
 }
 
+// This method will create a new user in the database based on given user data
 const createUser = async(newUser) => {
-    await User.create(newUser);
+    try {
+        await User.create(newUser);
+    }
+    catch(error){
+        throw new Error(error);
+    }
 }
 
+// This method will update a users information based on a new updated user model
 const updateUser = async(updatedUser) => {
-    await updatedUser.save();
+    try {
+        await updatedUser.save();
+    }
+    catch(error){
+        throw new Error(error);
+    }
 }
 
+// This method will delete a user from the database based on given email, refresh token or userId
 const deleteUser = async(valType, userVal) => {
-    let user;
-    if (valType == "email") {
-        user = await User.deleteOne({email: userVal}).exec();
+    try {
+        let user;
+        if (valType == "email") {
+            user = await User.deleteOne({email: userVal}).exec();
+        }
+        else if (valType == "refreshToken") {
+            user = await User.deleteOne({refreshToken: userVal}).exec();
+        }
+        else if (valType == "userId") {
+            user = await User.deleteOne({_id: userVal}).exec();
+        }
     }
-    else if (valType == "refreshToken") {
-        user = await User.deleteOne({refreshToken: userVal}).exec();
-    }
-    else if (valType == "userId") {
-        user = await User.deleteOne({_id: userVal}).exec();
+    catch(error){
+        throw new Error(error);
     }
 }
 

@@ -1,8 +1,7 @@
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
-const Checkout = ({user}) => {
+const Checkout = () => {
     const state = [];
-    const u= user
     const EmptyCart = () => {
         return (
             <div className="container">
@@ -382,14 +381,15 @@ const Checkout = ({user}) => {
     return (
 
         <>
-        {user?
+        {/* {user? */}
             <div className="container my-3 py-3">
                 <h1 className="text-center">Checkout</h1>
                 <hr />
                 {state.length + 1 ? <ShowCheckout /> : <EmptyCart />}
-            </div>:<>{alert("Please Login To Checkout!")}
-            <Navigate to="/login"/> 
-            </>}
+            </div>
+            {/* :<>{alert("Please Login To Checkout!")}
+            <Navigate to="/login"/>  */}
+            {/* </>} */}
         </>
     );
 };

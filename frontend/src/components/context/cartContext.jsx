@@ -21,7 +21,7 @@ export function CartProvider({ children }) {
     }, []);
 
     const getCartFromServer = async () => {
-        const cart = getCart();
+        const cart = await getCart();
         const array = cart.data.items;
         console.log(cart.data.items);
         if (!array) {
@@ -48,7 +48,7 @@ export function CartProvider({ children }) {
         return quantity;
     }
     const addToBackend = async (item, quantity) => {
-        addToCart(
+        await addToCart(
             {
                 itemId: item._id,
                 quantity: quantity,
@@ -61,7 +61,7 @@ export function CartProvider({ children }) {
     };
 
     const addToBackendId = async (itemId, quantity) => {
-        addToCart(
+        await addToCart(
             {
                 itemId: itemId,
                 quantity: quantity,

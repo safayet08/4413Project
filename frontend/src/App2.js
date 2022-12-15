@@ -18,6 +18,7 @@ import CartProvider from "./components/context/cartContext";
 import axios from "axios";
 import AdminView from "./components/AdminView";
 import { getRefreshToken } from "./services/userService";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App2 = () => {
     const [user, setUser] = useState([]);

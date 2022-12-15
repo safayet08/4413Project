@@ -2,8 +2,8 @@ import Item from "./itemCard";
 import * as ItemService from "../services/fakeItemService";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-const ItemList = ({filterCategory,filterQuery}) => {
-  // const [items, setItems] = useState(getItems());
+const ItemList = ({ filterCategory, filterQuery }) => {
+    // const [items, setItems] = useState(getItems());
 
     // const [filters] = useState(() => {
     //     let filterSet = new Set();
@@ -18,16 +18,15 @@ const ItemList = ({filterCategory,filterQuery}) => {
     const [displayedItems, setDisplayedItems] = useState([]);
     const [filters, setFilters] = useState([]);
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      const a = await ItemService.getItems(filterCategory,filterQuery);
-      setItems(a);
-      setDisplayedItems(a)
-      console.log(a);
-    };
-    fetchItems();
-
-  }, [filterCategory,filterQuery, ]);
+    useEffect(() => {
+        const fetchItems = async () => {
+            const a = await ItemService.getItems(filterCategory, filterQuery);
+            setItems(a);
+            setDisplayedItems(a);
+            console.log(a);
+        };
+        fetchItems();
+    }, [filterCategory, filterQuery]);
 
     useEffect(() => {
         const getFilters = async () => {
@@ -72,7 +71,7 @@ const ItemList = ({filterCategory,filterQuery}) => {
             <div className="row" key={5}>
                 {displayedItems.map((item) => (
                     // <Link   to={"/item/" + item._id} stlye={{"inline":""}}>
-                        <Item key={item._id} item={item} />
+                    <Item key={item._id} item={item} />
                     // </Link>
                 ))}
             </div>

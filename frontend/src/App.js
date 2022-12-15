@@ -10,6 +10,7 @@ import NotFound from "./components/notFound";
 import LoginForm from "./pages/loginForm";
 import RegisterForm from "./pages/registerForm";
 import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Item from "./pages/item";
 import CartProvider from "./components/context/cartContext";

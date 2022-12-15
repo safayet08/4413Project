@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const port = "5000";
+import { port } from "./frontEndConfig";
 const API_URL = `http://localhost:${port}/api/user`;
 
 export async function registerService(fullName, email, password) {
@@ -16,4 +16,8 @@ export async function loginService(email, password) {
         Username: email,
         Password: password,
     });
+}
+
+export async function logoutService() {
+    return await axios.post(`${API_URL}/logout`);
 }

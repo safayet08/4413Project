@@ -15,6 +15,7 @@ import Item from "./pages/item";
 import CartProvider from "./components/cartContext";
 
 import axios from "axios";
+import AdminView from "./components/AdminView";
 
 class App extends Component {
     state = {};
@@ -58,8 +59,8 @@ class App extends Component {
                 <main className="container">
                     <Routes>
                         <Route exact path="/" element={<Home />} />
-                        <Route  path="/search" element={<Home />} />
-                        
+                        <Route path="/search" element={<Home />} />
+                        <Route path="/admin" element={<AdminView />} />
                         <Route path="/register" element={<RegisterForm />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/item/:_id" element={<Item />} />

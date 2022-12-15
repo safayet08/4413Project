@@ -1,8 +1,7 @@
 import { createContext, useState } from "react";
-import { getItem } from "../services/fakeItemService";
+import { getItem } from "../../services/fakeItemService";
 import { useEffect } from "react";
-import axios from "axios";
-import { port } from "../services/frontEndConfig";
+import { getCart, addToCart } from "../../services/cartService";
 
 export const CartContext = createContext({
     items: [],
@@ -17,17 +16,12 @@ export const CartContext = createContext({
 
 export function CartProvider({ children }) {
     const [cartProducts, setCartProducts] = useState([]);
-
     useEffect(() => {
-        console.log("YOO");
         getCartFromServer();
     }, []);
 
     const getCartFromServer = async () => {
-        const apiUrl = `http://localhost:${port}/api/cart/getCart`;
-
-        const cart = await axios.get(apiUrl, { withCredentials: "true" });
-
+        const cart = getCart();
         const array = cart.data.items;
         console.log(cart.data.items);
         if (!array) {
@@ -54,36 +48,29 @@ export function CartProvider({ children }) {
         return quantity;
     }
     const addToBackend = async (item, quantity) => {
-        const apiUrl = `http://localhost:${port}/api/cart/addCart`;
-        const headers = {
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": true,
-        };
-
-        const body = {
-            itemId: item._id,
-            quantity: quantity,
-        };
-        console.log(item._id);
-
-        const res = await axios.post(apiUrl, body, headers);
-        console.log(res);
+        addToCart(
+            {
+                itemId: item._id,
+                quantity: quantity,
+            },
+            {
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": true,
+            }
+        );
     };
+
     const addToBackendId = async (itemId, quantity) => {
-        const apiUrl = `http://localhost:${port}/api/cart/addCart`;
-        const headers = {
-            Accept: "application/json",
-            "Access-Control-Allow-Origin": true,
-        };
-
-        const body = {
-            itemId: itemId,
-            quantity: quantity,
-        };
-        console.log(itemId);
-
-        const res = await axios.post(apiUrl, body, headers);
-        console.log(res);
+        addToCart(
+            {
+                itemId: itemId,
+                quantity: quantity,
+            },
+            {
+                Accept: "application/json",
+                "Access-Control-Allow-Origin": true,
+            }
+        );
     };
 
     function addOneToCart(item) {

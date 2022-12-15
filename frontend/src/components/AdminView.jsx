@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getSalesRecords } from "../services/adminService";
+import { async } from "../services/cartService";
 
 const AdminView = () => {
     const [tableData, setTableData] = useState([]);
@@ -7,12 +8,16 @@ const AdminView = () => {
     useEffect(() => {
         setTableData();
         console.log("-------------->>>");
-        console.log("tableData: " + tableData);
+        // const data = await getSalesRecords();
+
+        setTableData();
     }, []);
 
     return (
         <>
-            <h1>Admin View: {tableData}</h1>
+            <h1>Admin View:</h1>
+            {console.log("-------------->>>")}
+            {console.log(tableData)}
         </>
     );
 };

@@ -12,7 +12,7 @@ import RegisterForm from "./pages/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Item from "./pages/item";
-import CartProvider from "./components/cartContext";
+import CartProvider from "./components/context/cartContext";
 
 import axios from "axios";
 import AdminView from "./components/AdminView";

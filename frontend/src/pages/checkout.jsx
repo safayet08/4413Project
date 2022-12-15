@@ -3,86 +3,82 @@ import React from "react";
 import { useEffect } from "react";
 import { useState, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { CartContext } from "../components/cartContext";
+import { CartContext } from "../components/context/cartContext";
+import { port } from "../services/frontEndConfig";
 const Checkout = () => {
     const state = [];
-    const cartContext= useContext(CartContext)
-    const navigate= useNavigate()
-    const port=5000
+    const cartContext = useContext(CartContext);
+    const navigate = useNavigate();
     const fname = useRef();
     const lname = useRef();
     const email = useRef();
-    const address= useRef();
-    const address2= useRef();
-    const country= useRef();
-    const stateref= useRef();
-    const zip= useRef();
-    const nameCard= useRef();
-    const ccnum= useRef();
-    const expiration= useRef();
-    const ccv= useRef();
+    const address = useRef();
+    const address2 = useRef();
+    const country = useRef();
+    const stateref = useRef();
+    const zip = useRef();
+    const nameCard = useRef();
+    const ccnum = useRef();
+    const expiration = useRef();
+    const ccv = useRef();
 
-    useEffect(()=>{
+    useEffect(() => {
         const accessToken = localStorage.getItem("accToken");
-        if(!accessToken){
-            navigate("/login")
-            alert("Need to be logged in to do that!")
+        if (!accessToken) {
+            navigate("/login");
+            alert("Need to be logged in to do that!");
         }
+    }, []);
 
-    },[])
+    const userApi = `http://localhost:${port}/api/user`;
+    const orderApi = `http://localhost:${port}/api/order`;
 
-    const userApi=`http://localhost:${port}/api/user`
-    const orderApi=`http://localhost:${port}/api/order`
+    const handleCheckout = async (e) => {
+        e.preventDefault();
+        const res = await axios.get(`${userApi}/getUser`);
+        const owner = res.data._id;
+        console.log(cartContext.items);
 
-    const handleCheckout= async (e)=>{
-        e.preventDefault()
-        const res= await axios.get(`${userApi}/getUser`)
-        const owner= res.data._id
-        console.log(cartContext.items)
-
-        const items= cartContext.items.map((entry)=>{
+        const items = cartContext.items.map((entry) => {
             return {
-                itemId:entry.item._id,
-                name:entry.item.name,
-                quantity:entry.quantity,
-                price:entry.item.price* entry.quantity
-            }
-        })
+                itemId: entry.item._id,
+                name: entry.item.name,
+                quantity: entry.quantity,
+                price: entry.item.price * entry.quantity,
+            };
+        });
 
-        const bill= cartContext.getTotalCost()
-        const add= address.current.value+ " "+address2.current.value
-        const newOrder={
-            owner:owner,
-            items:items,
-            bill:bill,
-            address:address
-        }
-
-        const accessResponse=await axios.get(`${userApi}/refresh`)
-        const accesToken= accessResponse.data.user
-        if(!accesToken){
-            alert("Issue with login")
-            navigate("/login")
-            window.location.reload(false);
-        }else{
-            localStorage.setItem("accToken", accesToken)
-        const body={
-            address:add
-        }
-        const token= localStorage.getItem("accToken")
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
+        const bill = cartContext.getTotalCost();
+        const add = address.current.value + " " + address2.current.value;
+        const newOrder = {
+            owner: owner,
+            items: items,
+            bill: bill,
+            address: address,
         };
-        
-        await axios.post(`${orderApi}/placeOrder`, body, config)
-        
-        navigate("/")
-        window.location.reload(false);
-    }
-        
 
-    }
-    
+        const accessResponse = await axios.get(`${userApi}/refresh`);
+        const accesToken = accessResponse.data.user;
+        if (!accesToken) {
+            alert("Issue with login");
+            navigate("/login");
+            window.location.reload(false);
+        } else {
+            localStorage.setItem("accToken", accesToken);
+            const body = {
+                address: add,
+            };
+            const token = localStorage.getItem("accToken");
+            const config = {
+                headers: { Authorization: `Bearer ${token}` },
+            };
+
+            await axios.post(`${orderApi}/placeOrder`, body, config);
+
+            navigate("/");
+            window.location.reload(false);
+        }
+    };
 
     const EmptyCart = () => {
         return (
@@ -161,7 +157,7 @@ const Checkout = () => {
                                                     First name
                                                 </label>
                                                 <input
-                                                ref={fname}
+                                                    ref={fname}
                                                     type="text"
                                                     className="form-control"
                                                     id="firstName"
@@ -182,7 +178,7 @@ const Checkout = () => {
                                                     Last name
                                                 </label>
                                                 <input
-                                                ref={lname}
+                                                    ref={lname}
                                                     type="text"
                                                     className="form-control"
                                                     id="lastName"
@@ -202,7 +198,7 @@ const Checkout = () => {
                                                     Email
                                                 </label>
                                                 <input
-                                                ref={email}
+                                                    ref={email}
                                                     type="email"
                                                     className="form-control"
                                                     id="email"
@@ -224,7 +220,7 @@ const Checkout = () => {
                                                     Address
                                                 </label>
                                                 <input
-                                                ref={address}
+                                                    ref={address}
                                                     type="text"
                                                     className="form-control"
                                                     id="address"
@@ -248,7 +244,7 @@ const Checkout = () => {
                                                     </span>
                                                 </label>
                                                 <input
-                                                ref={address2}
+                                                    ref={address2}
                                                     type="text"
                                                     className="form-control"
                                                     id="address2"
@@ -265,7 +261,7 @@ const Checkout = () => {
                                                 </label>
                                                 <br />
                                                 <select
-                                                ref={country}
+                                                    ref={country}
                                                     className="form-select"
                                                     id="country"
                                                     required
@@ -348,7 +344,7 @@ const Checkout = () => {
                                                     Zip
                                                 </label>
                                                 <input
-                                                ref={zip}
+                                                    ref={zip}
                                                     type="text"
                                                     className="form-control"
                                                     id="zip"
@@ -374,7 +370,7 @@ const Checkout = () => {
                                                     Name on card
                                                 </label>
                                                 <input
-                                                ref={nameCard}
+                                                    ref={nameCard}
                                                     type="text"
                                                     className="form-control"
                                                     id="cc-name"
@@ -398,7 +394,7 @@ const Checkout = () => {
                                                     Credit card number
                                                 </label>
                                                 <input
-                                                ref={ccnum}
+                                                    ref={ccnum}
                                                     type="text"
                                                     className="form-control"
                                                     id="cc-number"
@@ -419,7 +415,7 @@ const Checkout = () => {
                                                     Expiration
                                                 </label>
                                                 <input
-                                                ref={expiration}
+                                                    ref={expiration}
                                                     type="text"
                                                     className="form-control"
                                                     id="cc-expiration"
@@ -439,7 +435,7 @@ const Checkout = () => {
                                                     CVV
                                                 </label>
                                                 <input
-                                                ref={ccv}
+                                                    ref={ccv}
                                                     type="text"
                                                     className="form-control"
                                                     id="cc-cvv"
@@ -471,9 +467,8 @@ const Checkout = () => {
         );
     };
     return (
-
         <>
-        {/* {user? */}
+            {/* {user? */}
             <div className="container my-3 py-3">
                 <h1 className="text-center">Checkout</h1>
                 <hr />

@@ -13,23 +13,15 @@ import RegisterForm from "./pages/registerForm";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Item from "./pages/item";
-import { CartContext } from "./components/cartContext";
-import CartProvider from "./components/cartContext";
+import { CartContext } from "./components/context/cartContext";
+import CartProvider from "./components/context/cartContext";
 import axios from "axios";
+import AdminView from "./components/AdminView";
+import { getRefreshToken } from "./services/userService";
 
 const App2 = () => {
-    const port = "3333";
     const [user, setUser] = useState([]);
     const cartContext = useContext(CartContext);
-    const getRefreshToken = async () => {
-        const apiUrl = `http://localhost:${port}/api/home`;
-        axios.defaults.withCredentials = true;
-        const response = await axios.post(apiUrl, {
-            withCredentials: true,
-            credentials: "include",
-        });
-        // console.log(response.data);
-    };
     const getUserCart = async () => {
         cartContext.getCartFromServer();
     };
@@ -38,7 +30,6 @@ const App2 = () => {
         getRefreshToken();
         // const jwtRefreshcookie = { jwt: jscookie.get("jwt") };
         // console.log("-->" + jwtRefreshcookie.jwt);
-
         try {
             const accessToken = localStorage.getItem("accToken");
             // console.log(" access token " +accessToken)
@@ -65,7 +56,7 @@ const App2 = () => {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/search" element={<Home />} />
-
+                    <Route path="/admin" element={<AdminView />} />
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/item/:_id" element={<Item />} />

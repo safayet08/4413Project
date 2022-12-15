@@ -1,10 +1,10 @@
 import axios from "axios";
 
 import { port } from "./frontEndConfig";
-const API_URL = `http://localhost:${port}/api/user`;
+const API_URL = `http://localhost:${port}/api`;
 
 export async function registerService(fullName, email, password) {
-    return await axios.post(`${API_URL}/addUser`, {
+    return await axios.post(`${API_URL}/user/addUser`, {
         Name: fullName,
         Username: email,
         Password: password,
@@ -12,12 +12,20 @@ export async function registerService(fullName, email, password) {
 }
 
 export async function loginService(email, password) {
-    return await axios.post(`${API_URL}/login`, {
+    return await axios.post(`${API_URL}/user/login`, {
         Username: email,
         Password: password,
     });
 }
 
 export async function logoutService() {
-    return await axios.post(`${API_URL}/logout`);
+    return await axios.post(`${API_URL}/user/logout`);
+}
+
+export async function getRefreshToken() {
+    axios.defaults.withCredentials = true;
+    return await axios.post(`${API_URL}/home`, {
+        withCredentials: true,
+        credentials: "include",
+    });
 }

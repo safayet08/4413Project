@@ -3,19 +3,18 @@ import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { CartContext } from "./cartContext";
+import { CartContext } from "./context/cartContext";
 import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 import { useRef } from "react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
 import { logoutService } from "../services/userService";
+import { port } from "../services/frontEndConfig";
 
 const NavBar = ({ user, changeUser }) => {
     const cart = useContext(CartContext);
     const navigate = useNavigate();
-    const port = 5000;
     const textFieldRef = useRef(null);
     const filterFieldRef = useRef(null);
     const [show, setShow] = useState(false);

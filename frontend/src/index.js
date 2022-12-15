@@ -13,7 +13,7 @@ window.PORT = "3333";
 
 root.render(
     <BrowserRouter>
-        <App />
+        <App2 />
     </BrowserRouter>
 );
 

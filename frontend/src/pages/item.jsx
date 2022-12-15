@@ -1,20 +1,19 @@
 import * as ItemService from "../services/fakeItemService";
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect,useContext } from "react";
-import { CartContext } from "../components/cartContext";
+import { useState, useEffect, useContext } from "react";
+import { CartContext } from "../components/context/cartContext";
 const Item = () => {
-    const cart= useContext(CartContext)
-    const[item, setItem]=useState({})
-    const id= useParams()._id
-    useEffect(()=>{
-        const GetItemFromServer = async()=>{
-            const item= await ItemService.getItem(id)
-            setItem(item)
-        }
-        GetItemFromServer()
+    const cart = useContext(CartContext);
+    const [item, setItem] = useState({});
+    const id = useParams()._id;
+    useEffect(() => {
+        const GetItemFromServer = async () => {
+            const item = await ItemService.getItem(id);
+            setItem(item);
+        };
+        GetItemFromServer();
+    }, []);
 
-    },[])
-    
     return (
         <>
             <div className="container my-5 py-2">
@@ -41,7 +40,7 @@ const Item = () => {
                         <p className="lead">{item.description}</p>
                         <button
                             className="btn btn-outline-dark"
-                        onClick={() => cart.addOneToCart(item)}
+                            onClick={() => cart.addOneToCart(item)}
                         >
                             Add to Cart
                         </button>

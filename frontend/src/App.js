@@ -14,7 +14,10 @@ import "./App.css";
 import Item from "./pages/item";
 import CartProvider from "./components/cartContext";
 
+import { getSalesRecords } from "./services/adminService";
+
 import axios from "axios";
+import AdminView from "./pages/AdminView";
 
 class App extends Component {
     state = {};
@@ -44,13 +47,13 @@ class App extends Component {
         } catch (ex) {
             console.log("no access token");
         }
+
+        this.setState({ salesRecords: getSalesRecords() });
     }
 
     f() {}
 
     render() {
-        console.log("Rendering-->");
-        console.log(this.state);
         return (
             <CartProvider>
                 <ToastContainer />
@@ -58,13 +61,14 @@ class App extends Component {
                 <main className="container">
                     <Routes>
                         <Route exact path="/" element={<Home />} />
-                        <Route  path="/search" element={<Home />} />
-                        
+                        <Route path="/search" element={<Home />} />
+                        <Route path="/admin" element={<AdminView />} />
                         <Route path="/register" element={<RegisterForm />} />
                         <Route path="/login" element={<LoginForm />} />
                         <Route path="/item/:_id" element={<Item />} />
                         <Route path="/not-found" element={<NotFound />} />
                         <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/admin" element={<AdminView />} />
                     </Routes>
                 </main>
             </CartProvider>

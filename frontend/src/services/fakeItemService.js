@@ -1,4 +1,4 @@
-import * as itemService from "./itemService.js"
+import * as itemService from "./itemService.js";
 let listOfItems = [
     {
         _id: "638d39e6131bea3198ca9a9d",
@@ -111,11 +111,15 @@ function shuffle(array) {
 
 const items = shuffle(listOfItems);
 
-export async function getItems(filterCategory,filterQuery) {
+export async function getItems(filterCategory, filterQuery) {
     // console.log("Filter Category" , filterCategory)
-    return await itemService.getItems(filterCategory,filterQuery);
+    return await itemService.getItems(filterCategory, filterQuery);
 }
 
 export async function getItem(id) {
-    return await itemService.getItem(id)
+    return await itemService.getItem(id);
+}
+
+export async function postReview(id, reviews) {
+    return await itemService.postReview(id, reviews);
 }

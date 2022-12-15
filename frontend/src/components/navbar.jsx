@@ -7,36 +7,39 @@ import { CartContext } from "./cartContext";
 import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import {useRef} from 'react';
+import { useRef } from "react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = ({ user,changeUser }) => {
+const NavBar = ({ user, changeUser }) => {
     const cart = useContext(CartContext);
     const navigate = useNavigate();
-    const port=5000
-    const textFieldRef= useRef(null)
-    const filterFieldRef= useRef(null)
+    const port = 3333;
+    const textFieldRef = useRef(null);
+    const filterFieldRef = useRef(null);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const handleLogout= async ()=>{
-        changeUser([])
-        const apiUrl=`http://localhost:${port}/api/user/logout`
-        const response= await axios.get(apiUrl, {withCredentials:true})
+    const handleLogout = async () => {
+        changeUser([]);
+        const apiUrl = `http://localhost:${port}/api/user/logout`;
+        const response = await axios.get(apiUrl, { withCredentials: true });
         localStorage.clear();
         window.location.reload(false);
-
-    }   
-    const handleClick=(e)=>{
+    };
+    const handleClick = (e) => {
         // console.log(textFieldRef.current.value)
         // console.log(searchFilter)
-        const query= textFieldRef.current.value
-        const filter= searchFilter==="Filter" ? "name" : searchFilter==="By Brand"? "brand" : "category"
-        
-        navigate(`/search?query=${query}&filter=${filter}`)
+        const query = textFieldRef.current.value;
+        const filter =
+            searchFilter === "Filter"
+                ? "name"
+                : searchFilter === "By Brand"
+                ? "brand"
+                : "category";
 
-    }
+        navigate(`/search?query=${query}&filter=${filter}`);
+    };
     // console.log(cart.items)
     const productsCount = cart.items.reduce(
         (sum, product) => sum + product.quantity,
@@ -171,8 +174,6 @@ const NavBar = ({ user,changeUser }) => {
                                     >
                                         By Category
                                     </NavDropdown.Item>
-
-
                                 </NavDropdown>
                                 <Form.Control
                                     type="search"
@@ -182,14 +183,14 @@ const NavBar = ({ user,changeUser }) => {
                                     ref={textFieldRef}
                                 />
 
-                                <Button onClick={handleClick} variant="outline-secondary">
-                                    <i 
-
+                                <Button
+                                    onClick={handleClick}
+                                    variant="outline-secondary"
+                                >
+                                    <i
                                         className="fa fa-search"
                                         aria-hidden="true"
                                     ></i>
-                                                                        
-
                                 </Button>
                             </Form>
                         </li>
@@ -234,7 +235,6 @@ const NavBar = ({ user,changeUser }) => {
                                     to="/"
                                     className="btn btn-dark m-2"
                                     onClick={handleLogout}
-
                                 >
                                     <i
                                         class="fa fa-sign-out"

@@ -1,8 +1,9 @@
 import * as ItemService from "../services/fakeItemService";
 import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-
+import { useState, useEffect,useContext } from "react";
+import { CartContext } from "../components/cartContext";
 const Item = () => {
+    const cart= useContext(CartContext)
     const[item, setItem]=useState({})
     const id= useParams()._id
     useEffect(()=>{
@@ -40,13 +41,10 @@ const Item = () => {
                         <p className="lead">{item.description}</p>
                         <button
                             className="btn btn-outline-dark"
-                            //onClick={() => addProduct(product)}
+                        onClick={() => cart.addOneToCart(item)}
                         >
                             Add to Cart
                         </button>
-                        {/* <Link to="/cart" className="btn btn-dark mx-3"> */}
-                            Go to Cart
-                        {/* </Link> */}
                     </div>
                 </div>
             </div>

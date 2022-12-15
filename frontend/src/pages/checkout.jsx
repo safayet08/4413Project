@@ -1,7 +1,78 @@
+import axios from "axios";
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useState, useRef, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { CartContext } from "../components/cartContext";
 const Checkout = () => {
     const state = [];
+    const cartContext= useContext(CartContext)
+    const navigate= useNavigate()
+    const port=5000
+    const fname = useRef();
+    const lname = useRef();
+    const email = useRef();
+    const address= useRef();
+    const address2= useRef();
+    const country= useRef();
+    const stateref= useRef();
+    const zip= useRef();
+    const nameCard= useRef();
+    const ccnum= useRef();
+    const expiration= useRef();
+    const ccv= useRef();
+
+    useEffect(()=>{
+        const accessToken = localStorage.getItem("accToken");
+        if(!accessToken){
+            navigate("/login")
+            alert("Need to be logged in to do that!")
+        }
+
+    },[])
+
+    const userApi=`http://localhost:${port}/api/user`
+    const orderApi=`http://localhost:${port}/api/order`
+
+    const handleCheckout= async (e)=>{
+        e.preventDefault()
+        const res= await axios.get(`${userApi}/getUser`)
+        const owner= res.data._id
+        console.log(cartContext.items)
+
+        const items= cartContext.items.map((entry)=>{
+            return {
+                itemId:entry.item._id,
+                name:entry.item.name,
+                quantity:entry.quantity,
+                price:entry.item.price* entry.quantity
+            }
+        })
+
+        const bill= cartContext.getTotalCost()
+        const add= address.current.value+ " "+address2.current.value
+        const newOrder={
+            owner:owner,
+            items:items,
+            bill:bill,
+            address:address
+        }
+
+        await axios.get(`${userApi}/refresh`)
+        const body={
+            address:add
+        }
+
+        await axios.post(`${orderApi}/placeOrder`, body)
+        
+        navigate("/")
+        window.location.reload(false);
+
+        
+
+    }
+    
+
     const EmptyCart = () => {
         return (
             <div className="container">
@@ -68,7 +139,7 @@ const Checkout = () => {
                                 <div className="card-body">
                                     <form
                                         className="needs-validation"
-                                        novalidate
+                                        noValidate
                                     >
                                         <div className="row g-3">
                                             <div className="col-sm-6 my-1">
@@ -79,11 +150,11 @@ const Checkout = () => {
                                                     First name
                                                 </label>
                                                 <input
+                                                ref={fname}
                                                     type="text"
                                                     className="form-control"
                                                     id="firstName"
                                                     placeholder=""
-                                                    value=""
                                                     required
                                                 />
                                                 <div className="invalid-feedback">
@@ -100,11 +171,11 @@ const Checkout = () => {
                                                     Last name
                                                 </label>
                                                 <input
+                                                ref={lname}
                                                     type="text"
                                                     className="form-control"
                                                     id="lastName"
                                                     placeholder=""
-                                                    value=""
                                                     required
                                                 />
                                                 <div className="invalid-feedback">
@@ -120,6 +191,7 @@ const Checkout = () => {
                                                     Email
                                                 </label>
                                                 <input
+                                                ref={email}
                                                     type="email"
                                                     className="form-control"
                                                     id="email"
@@ -141,6 +213,7 @@ const Checkout = () => {
                                                     Address
                                                 </label>
                                                 <input
+                                                ref={address}
                                                     type="text"
                                                     className="form-control"
                                                     id="address"
@@ -164,6 +237,7 @@ const Checkout = () => {
                                                     </span>
                                                 </label>
                                                 <input
+                                                ref={address2}
                                                     type="text"
                                                     className="form-control"
                                                     id="address2"
@@ -180,6 +254,7 @@ const Checkout = () => {
                                                 </label>
                                                 <br />
                                                 <select
+                                                ref={country}
                                                     className="form-select"
                                                     id="country"
                                                     required
@@ -207,6 +282,7 @@ const Checkout = () => {
                                                 <br />
                                                 <select
                                                     className="form-select"
+                                                    ref={stateref}
                                                     id="state"
                                                     required
                                                 >
@@ -261,6 +337,7 @@ const Checkout = () => {
                                                     Zip
                                                 </label>
                                                 <input
+                                                ref={zip}
                                                     type="text"
                                                     className="form-control"
                                                     id="zip"
@@ -286,6 +363,7 @@ const Checkout = () => {
                                                     Name on card
                                                 </label>
                                                 <input
+                                                ref={nameCard}
                                                     type="text"
                                                     className="form-control"
                                                     id="cc-name"
@@ -309,6 +387,7 @@ const Checkout = () => {
                                                     Credit card number
                                                 </label>
                                                 <input
+                                                ref={ccnum}
                                                     type="text"
                                                     className="form-control"
                                                     id="cc-number"
@@ -329,6 +408,7 @@ const Checkout = () => {
                                                     Expiration
                                                 </label>
                                                 <input
+                                                ref={expiration}
                                                     type="text"
                                                     className="form-control"
                                                     id="cc-expiration"
@@ -348,6 +428,7 @@ const Checkout = () => {
                                                     CVV
                                                 </label>
                                                 <input
+                                                ref={ccv}
                                                     type="text"
                                                     className="form-control"
                                                     id="cc-cvv"
@@ -365,7 +446,7 @@ const Checkout = () => {
                                         <button
                                             className="w-100 btn btn-primary "
                                             type="submit"
-                                            disabled
+                                            onClick={handleCheckout}
                                         >
                                             Continue to checkout
                                         </button>

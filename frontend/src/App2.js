@@ -45,6 +45,7 @@ const App2 = () => {
         // console.log(" access token " +accessToken)
         const user = jwtDecode(accessToken).UserInfo;
         setUser(user)
+        console.log(user)
         // console.log(user);
     } catch (ex) {
         console.log("no access token");

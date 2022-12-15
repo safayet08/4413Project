@@ -1,7 +1,7 @@
 import * as ItemService from "../services/fakeItemService";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation} from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button, Form, Input } from "reactstrap";
+import { Button, Form } from "reactstrap";
 import jwtDecode from "jwt-decode";
 
 const Item = () => {
@@ -16,22 +16,36 @@ const Item = () => {
         borderRadius: "20px",
         margin: "auto",
     };
+    const params= useParams()
     const [review, setReviews] = useState([]);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
     const [item, setItem] = useState({});
     const [user, setUser] = useState({});
-    const addReviewHandler = async () => {
+    const addReviewHandler = async (e) => {    
+
+        e.preventDefault() 
         let reviews = {
             userName: user,
+            user:user.email,
+            type:"email",
             rating: rating,
             comment: comment,
         };
-        ItemService.postReview(id, reviews);
+        try{
+        const res= await ItemService.postReview(item._id, reviews, user.email,"email");
+        const data= await res.data()
+        console.log(data)
+
+        window.location.reload(false)
+        }catch(error){
+            alert("Error submitting review, this user might already have a review")
+        }
     };
-    const id = useParams()._id;
     useEffect(() => {
+
         const GetItemFromServer = async () => {
+            const id= params._id
             const item = await ItemService.getItem(id);
             setItem(item);
             setReviews(item.reviews);
@@ -40,6 +54,7 @@ const Item = () => {
         try {
             const user = jwtDecode(localStorage.getItem("accToken")).UserInfo;
             setUser(user);
+            console.log(user)
         } catch (ex) {
             console.log("no access token");
         }
@@ -48,6 +63,7 @@ const Item = () => {
     return (
         <>
             <div className="container my-5 py-2">
+
                 <div className="row">
                     <div className="col-md-6 col-sm-12 py-3">
                         <img
@@ -80,44 +96,44 @@ const Item = () => {
                         {/* </Link> */}
                     </div>
                 </div>
-                {user.name && (
+                {user.name ? (
                     <>
                         <div class="product-reviews" style={formContainerStyle}>
-                            <Form onSubmit={addReviewHandler}>
-                                <Form.Group className="mb-3" controlId="rating">
-                                    <Form.Label>Rating</Form.Label>
-                                    <Form.Control
+                            <form onSubmit={addReviewHandler}>
+                                {/* <Form.Group className="mb-3" controlId="rating"> */}
+                                    <label>Rating</label>
+                                    <input
                                         value={rating}
                                         onChange={(e) =>
                                             setRating(e.target.value)
                                         }
                                         type="number"
                                     />
-                                </Form.Group>
-                                <Form.Group
+                                {/* </Form.Group> */}
+                                {/* <Form.Group
                                     className="mb-3"
                                     controlId="comment"
-                                >
-                                    <Form.Label>Comment</Form.Label>
-                                    <Form.Control
+                                > */}
+                                    <label>Comment</label>
+                                    <input
                                         value={comment}
                                         onChange={(e) =>
                                             setComment(e.target.value)
                                         }
                                         as="textarea"
                                     />
-                                </Form.Group>
+                                {/* </Form.Group> */}
                                 <br></br>
-                                <Button
+                                <button
                                     type="submit"
                                     style={{ background: "Black" }}
                                 >
                                     Add Review
-                                </Button>
-                            </Form>
+                                </button>
+                            </form>
                         </div>
                     </>
-                )}
+                ) : <></>}
                 <div>
                     <h4>Reviews: </h4>
                     <br />

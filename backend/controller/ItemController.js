@@ -100,8 +100,7 @@ export const addReview= async(req,res)=>{
         res.json(response)
     }catch(err){
         console.log(err)
-        res.status(404)
-        res.json({
+        res.status(409).json({
             message:err.message,
             stack: process.env.NODE_ENV==='production'? null: err.stack,
         })

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CartContext } from "./cartContext";
 import { useContext } from "react";
 
-const Item = (props) => {
+const ItemCard = (props) => {
     const { item } = props;
     const cart = useContext(CartContext);
     return (
@@ -56,4 +56,4 @@ const Item = (props) => {
     );
 };
 
-export default Item;
+export default ItemCard;

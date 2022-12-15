@@ -2,6 +2,7 @@ import express from "express";
 
 import Item from "../models/itemModel.js";
 import User from "../models/userModel.js";
+import UserDAO from "./UserDAO.js";
 
 export const getBestSellers = async (req, res) => {
   try {
@@ -46,7 +47,8 @@ export const removeReview = async (req, res) => {
     const userId = req.body.userId;
     const itemId = req.body.itemId;
     const item = await Item.findById(itemId);
-    const review = item.reviews.find((rev) => rev.user == userId);
+    const review = item.reviews.find((rev) => rev.user.toString() === userId);
+
     if (!review) {
       throw new Error("This user never made a review on that item!");
     }
@@ -62,9 +64,11 @@ export const addReview = async (req, res) => {
   try {
     const review = req.body.review;
     const itemId = req.body.itemId;
-    const userId = review.user;
-    const user= await User.findById(userId)
+    const u = review.user;
+    const type= review.type;
 
+    const user= await UserDAO.getUser(type,u)
+const userId=user._id
     const item = await Item.findById(itemId);
     if(!item){
       throw new Error("item does not exist")
@@ -77,17 +81,21 @@ export const addReview = async (req, res) => {
     if (review.rating > 5 || review.rating < 0) {
       throw new Error("Can't add raing over 5 or less than 0");
     }
-    console.log(item)
+    console.log(userId)
     const reviewExists = item.reviews.find(
-      (oldReview) => userId == oldReview.user
+      (oldReview) => userId.toString() == oldReview.user
     );
+    console.log(reviewExists)
     if (reviewExists) {
       throw new Error("This user already has a review that exists");
+    }
+    if(review.rating && review.rating<1 || review.rating>5){
+      throw new Error("Rating must be between 1 and 5!")
     }
     const newReview={
       rating:review.rating,
       comment: review.comment,
-      user: review.user,
+      user: user._id,
       userName:  userName
     }
     item.reviews.push(newReview);

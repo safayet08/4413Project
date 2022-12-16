@@ -27,6 +27,7 @@ const App2 = () => {
     };
 
     useEffect(() => {
+        console.log("YOO??")
         getRefreshToken();
         // const jwtRefreshcookie = { jwt: jscookie.get("jwt") };
         // console.log("-->" + jwtRefreshcookie.jwt);

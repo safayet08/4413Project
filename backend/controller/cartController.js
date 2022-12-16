@@ -27,7 +27,7 @@ const getCart = async(req, res) => {
 
     // if user is not found, then clear cookie and send no-content back
     if (!owner) {
-        res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
+        res.clearCookie('jwt', { httpOnly: true, sameSite: 'Strict'});
         return res.sendStatus(204);
     }
 
@@ -48,6 +48,8 @@ const getCart = async(req, res) => {
 const addCart = async(req, res) => { 
     
     // get cookie from request
+
+    // console.log(req.body)
     const cookies = req.cookies;
 
     // if no cookie, then send back 204 no content error
@@ -70,10 +72,11 @@ const addCart = async(req, res) => {
     const owner = foundUser._id;
 
     // get itemID from reqeust body
-    const itemId = req.body.itemId;
+    console.log(req.body)
+    const itemId = req.body.body.itemId;
 
     // get quantity of item from reqeust body
-    const quantity = req.body.quantity;
+    const quantity = req.body.body.quantity;
 
     // try to add/remove a item to/from cart, if no cart, create new cart
     try {
@@ -83,7 +86,7 @@ const addCart = async(req, res) => {
 
         // find the item based on the item id from the request body
         const item = await Item.findById(itemId);
-
+        console.log(itemId)
         // if no item, return 404 error saying no item found
         if (!item) {
             res.status(404).send({ message: "item not found" });

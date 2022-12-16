@@ -77,7 +77,7 @@ export function CartProvider({ children }) {
         const a = item;
         const id = item._id;
         const quantity = getProductQuantity(id);
-        // console.log(quantity)
+        console.log(quantity)
         if (quantity === 0) {
             setCartProducts([
                 ...cartProducts,

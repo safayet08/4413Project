@@ -81,7 +81,7 @@ app.use("/api/admin", adminRouter);
 
 // uncomment the below once we connect the backend and frontend
 // sets up JWT authentication middleware for when an order is placed, verify is user logged in
-//app.use(JWTVerify.verifyJWT);
+app.use(JWTVerify.verifyJWT);
 
 // set up order route with URL /api/order
 app.use("/api/order", orderRouter);

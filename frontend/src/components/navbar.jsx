@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import { CartContext } from "./context/cartContext";
 import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
-import axios from "axios";
 import { useRef } from "react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
@@ -23,10 +22,6 @@ const NavBar = ({ user, changeUser }) => {
     const handleShow = () => setShow(true);
     const handleLogout = async () => {
         changeUser([]);
-        const apiUrl = `http://localhost:${port}/api/user/logout`;
-        const response = await axios.get(apiUrl, { withCredentials: true });
-    const handleLogout = async () => {
-        changeUser([]);
         await logoutService();
         localStorage.clear();
         window.location.reload(false);
@@ -34,16 +29,6 @@ const NavBar = ({ user, changeUser }) => {
     const handleClick = (e) => {
         // console.log(textFieldRef.current.value)
         // console.log(searchFilter)
-        const query = textFieldRef.current.value;
-        const filter =
-            searchFilter === "Filter"
-                ? "name"
-                : searchFilter === "By Brand"
-                ? "brand"
-                : "category";
-
-        navigate(`/search?query=${query}&filter=${filter}`);
-    };
         const query = textFieldRef.current.value;
         const filter =
             searchFilter === "Filter"
@@ -105,7 +90,7 @@ const NavBar = ({ user, changeUser }) => {
                             to="/checkout"
                             className="btn btn-dark btn-lg btn-block"
                             onClick={handleClose}
-                            state={{user:user}}
+                            state={{ user: user }}
                         >
                             Go to checkout
                         </Link>
@@ -197,11 +182,6 @@ const NavBar = ({ user, changeUser }) => {
                                     ref={textFieldRef}
                                 />
 
-                                <Button
-                                    onClick={handleClick}
-                                    variant="outline-secondary"
-                                >
-                                    <i
                                 <Button
                                     onClick={handleClick}
                                     variant="outline-secondary"

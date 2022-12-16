@@ -5,16 +5,15 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
-import ReactDOM from "react-dom/client";
+import ReactDOM from 'react-dom';
 import App2 from "./App2";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-window.PORT = "3333";
 
-root.render(
+ReactDOM.render(
     <BrowserRouter>
         <App2 />
-    </BrowserRouter>
+    </BrowserRouter>,
+    document.getElementById("root")
 );
 
 registerServiceWorker();

@@ -10,6 +10,7 @@ export async function getCart() {
 }
 
 export async function addToCart(body, headers) {
+    console.log(body)
     return await axios.post(`${CART_API_URL}/addCart`, {
         body,
         headers,

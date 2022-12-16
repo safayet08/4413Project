@@ -8,7 +8,7 @@
     "server": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 backend/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently  \"npm run client\" \"npm run server\"",
-    "postinstall": "npm install --prefix ./frontend"
+    "postinstall": "npm install --prefix ./frontend && npm run build --prefix frontend"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
+    "@types/node": "^18.11.15",
     "nodemon": "^2.0.20"
   }
 }

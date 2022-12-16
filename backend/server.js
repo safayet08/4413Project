@@ -39,7 +39,11 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 // import config file for variables to use across the project
 import config from "./config/config.js";
+import { dirname,join } from 'path';
+const __dirname = dirname(__filename);
 
+
+console.log(join(__dirname,"..","frontend"))
 // configure dotenv package based on dotenv file.
 dotenv.config();
 
@@ -97,6 +101,15 @@ app.use(errorHandler);
 
 // initialize the application, set backend port to config.js file specified port
 console.log("CONFIG PORT->", config.PORT)
+app.use("/", routes);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
 
 app.listen(
     config.PORT,

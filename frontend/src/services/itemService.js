@@ -1,7 +1,7 @@
 import axios from "axios";
 import { port } from "./frontEndConfig";
 
-const apiUrl = window.location.protocol+"//"+window.location.hostname+ ":3333"+"/api/item";
+const apiUrl = window.location.protocol+"//"+window.location.hostname+ ":5000"+"/api/item";
 const apiEndpoint = `${apiUrl}/items`;
 
 function itemUrl(id) {

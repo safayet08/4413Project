@@ -95,15 +95,14 @@ app.use("/api/admin", adminRouter);
 app.use("/api/order", orderRouter);
 
 // set up not found error middleware
-app.use(notFound);
+// app.use(notFound);
 
 // set up error handle middleware
-app.use(errorHandler);
+// app.use(errorHandler);
 
 //const PORT = process.env.PORT || 5000;
 
 // initialize the application, set backend port to config.js file specified port
-console.log("PORT PORT->", process.env.NODE_ENV)
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(join(__dirname, "..","frontend","build")));

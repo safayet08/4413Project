@@ -47,6 +47,7 @@ const AdminView = () => {
             pageViewCountList.ItemView +
             pageViewCountList.CartAdd +
             pageViewCountList.Purchase;
+        console.log(totalCount);
 
         return (
             <>
@@ -56,7 +57,7 @@ const AdminView = () => {
                         {pageViewCountList.date}{" "}
                     </div>
 
-                    <div className="flex-child">
+                    <div className="flex-child" key="homepageAnalytics">
                         <p>HomePage Views</p>
                         <ProgressBar
                             striped
@@ -64,8 +65,10 @@ const AdminView = () => {
                             label={
                                 Math.round(
                                     (pageViewCountList.HomePage / totalCount) *
-                                        100
-                                ) + "%"
+                                        10000
+                                ) /
+                                    100 +
+                                "%"
                             }
                             now={
                                 (pageViewCountList.HomePage / totalCount) * 100
@@ -73,7 +76,7 @@ const AdminView = () => {
                         />
                     </div>
 
-                    <div className="flex-child">
+                    <div className="flex-child" key="itemViewAnalytics">
                         <p>Item Views</p>
                         <ProgressBar
                             striped
@@ -81,8 +84,10 @@ const AdminView = () => {
                             label={
                                 Math.round(
                                     (pageViewCountList.ItemView / totalCount) *
-                                        100
-                                ) + "%"
+                                        10000
+                                ) /
+                                    100 +
+                                "%"
                             }
                             now={
                                 (pageViewCountList.ItemView / totalCount) * 100
@@ -90,7 +95,7 @@ const AdminView = () => {
                         />
                     </div>
 
-                    <div className="flex-child">
+                    <div className="flex-child" key="cartAddAnalytics">
                         <p>Cart Add</p>
                         <ProgressBar
                             striped
@@ -98,14 +103,16 @@ const AdminView = () => {
                             label={
                                 Math.round(
                                     (pageViewCountList.CartAdd / totalCount) *
-                                        100
-                                ) + "%"
+                                        10000
+                                ) /
+                                    100 +
+                                "%"
                             }
                             now={(pageViewCountList.CartAdd / totalCount) * 100}
                         />
                     </div>
 
-                    <div className="flex-child">
+                    <div className="flex-child" key="purchaseAnalytics">
                         <p>Purchase</p>
                         <ProgressBar
                             striped
@@ -113,8 +120,10 @@ const AdminView = () => {
                             label={
                                 Math.round(
                                     (pageViewCountList.Purchase / totalCount) *
-                                        100
-                                ) + "%"
+                                        10000
+                                ) /
+                                    100 +
+                                "%"
                             }
                             now={
                                 (pageViewCountList.Purchase / totalCount) * 100

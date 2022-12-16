@@ -26,7 +26,7 @@ const Checkout = () => {
         const accessToken = localStorage.getItem("accToken");
         if (!accessToken) {
             navigate("/login");
-            alert("Need to be logged in to do that!");
+            //alert("Need to be logged in to do that!");
         }
     }, []);
 

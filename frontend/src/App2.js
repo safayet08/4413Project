@@ -57,11 +57,12 @@ const App2 = () => {
                     <Route exact path="/" element={<Home />} />
                     <Route path="/search" element={<Home />} />
                     {user && user.roles === "admin" && (
-                        <Route exact path="/admin" element={<AdminView />} />
-                    )}{" "}
-                    {user.roles !== "admin" && (
-                        <Route exact path="/admin" element={<NotFound />} />
+                        <Route path="/admin" element={<AdminView />} />
                     )}
+                    {user.roles !== "admin" && (
+                        <Route path="/admin" element={<NotFound />} />
+                    )}
+
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/item/:_id" element={<Item />} />

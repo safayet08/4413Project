@@ -105,7 +105,6 @@ app.use(errorHandler);
 
 // initialize the application, set backend port to config.js file specified port
 console.log("CONFIG PORT->", config.PORT)
-app.use("/", routes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));

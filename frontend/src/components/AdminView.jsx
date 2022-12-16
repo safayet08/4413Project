@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getSalesRecords, getVisitTable } from "../services/adminService";
 
-import BootstrapTable from "react-bootstrap-table-next";
+// import BootstrapTable from 'react-bootstrap-table-next';
 import ProgressBar from "react-bootstrap/ProgressBar";
 
 const AdminView = () => {
@@ -138,11 +138,11 @@ const AdminView = () => {
     return (
         <>
             <h2> Sales record</h2>
-            <BootstrapTable
+            {/* <BootstrapTable
                 keyField="id"
                 data={salesRecord}
                 columns={salesRecordColumns}
-            />
+            /> */}
             <br></br>
             <h2> Visit record</h2>
             <div>{visitRecord.map((record) => renderDailyVisits(record))}</div>

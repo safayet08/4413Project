@@ -48,7 +48,7 @@ const enterSite = async (req, res) => {
 
         if (!user) {
             console.log("User not found, redirect to login page.");
-            return res.sendStatus(401); //Unauthorized
+            return res.sendStatus(301); //Unauthorized
         }
 
         if (user.type == "user") {

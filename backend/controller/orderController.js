@@ -5,7 +5,7 @@ import orderDAO from "../dao/orderDAO.js"
 import cartDAO from "../dao/cartDAO.js"
 
 // import the user Data Access Object in order to make data calls to the user DB
-import userDAO from "../dao/userDAO.js"
+import userDAO from "../dao/UserDAO.js"
 
 // import the visit Data Access Object in order to make data calls to the user DB
 import VisitDAO from "../dao/visitDAO.js";

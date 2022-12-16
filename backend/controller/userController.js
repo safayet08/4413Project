@@ -130,7 +130,7 @@ const createNewUser = async (req, res) => {
 
             // if no duplicate user in DB, something suspicious is happening, send 401 error
 
-            if (!duplicateUser) return res.sendStatus(301); //Unauthorized
+            if (!duplicateUser) return res.sendStatus(401); //Unauthorized
 
             // update duplicateUsers name
             duplicateUser.name = Name;
@@ -174,7 +174,7 @@ const loginUser = async (req, res) => {
     const foundUser = await UserDAO.getUser("email", user);
 
     // if no user, then unauthorized to login
-    if (!foundUser) return res.sendStatus(401); //Unauthorized
+    if (!foundUser) return res.sendStatus(301); //Unauthorized
 
     // evaluate password by encrpyting provided password and comparing
     const match = await bcrypt.compare(pwd, foundUser.password);

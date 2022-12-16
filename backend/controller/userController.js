@@ -174,7 +174,7 @@ const loginUser = async (req, res) => {
     const foundUser = await UserDAO.getUser("email", user);
 
     // if no user, then unauthorized to login
-    if (!foundUser) return res.sendStatus(301); //Unauthorized
+    if (!foundUser) return res.sendStatus(401); //Unauthorized
 
     // evaluate password by encrpyting provided password and comparing
     const match = await bcrypt.compare(pwd, foundUser.password);
@@ -216,7 +216,7 @@ const loginUser = async (req, res) => {
         // Send access token to front end
         res.json({ user: accessToken });
     } else {
-        res.sendStatus(401);
+        res.sendStatus(301);
     }
 };
 

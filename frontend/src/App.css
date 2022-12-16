@@ -13,6 +13,7 @@
   padding: 20px;
   color: white;
 }
+
 /* *{
   text-decoration: 'none'
 } */
@@ -28,3 +29,25 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.flex-container {
+  display: flex;
+  border: 1px solid black;
+  flex-direction: row;
+}
+
+
+
+.flex-child-magenta {
+  margin-right: 20px;
+  text-align: center;
+  vertical-align: baseline;
+  flex-direction: column;
+} 
+
+.flex-child {
+  text-align: center;
+  flex-direction: column;
+  margin: 5px;
+  flex: 1;
+}  

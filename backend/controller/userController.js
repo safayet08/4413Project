@@ -22,11 +22,15 @@ const getUser = async (req, res) => {
     const refreshToken = cookies.jwt;
 
     // find the user attached to the refresh token
-    const foundUser = await UserDAO.getUser( "refreshToken", refreshToken)
+    const foundUser = await UserDAO.getUser("refreshToken", refreshToken);
 
     // if user is not found, then clear cookie and send no-content back
     if (!foundUser) {
-        res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
+        res.clearCookie("jwt", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+        });
         return res.sendStatus(204);
     }
 
@@ -35,13 +39,12 @@ const getUser = async (req, res) => {
 
 // This function will create a user. There are two ways this works:
 // 1 - if the user enters the main website not logged in, we will create a fake user
-// that will allow their cart to be persisted. The information for name, email, pwd 
+// that will allow their cart to be persisted. The information for name, email, pwd
 // will be fake in the DB, thus not compromising securtity.
 // 2 - if the user is actually registering an account, then the normal process will
 // occur.
 const createNewUser = async (req, res) => {
-
-    // get variable createCheck from query parameter if this method was called 
+    // get variable createCheck from query parameter if this method was called
     // from the api/home, which creates a fake user in the db
     const createCheck = req.query.createCheck;
 
@@ -55,7 +58,7 @@ const createNewUser = async (req, res) => {
         Name = randomstring.generate(10);
         pwd = randomstring.generate(10);
         Email = randomstring.generate(10);
-    } 
+    }
     // if api call came directly from registration page, get actual info
     else {
         Name = req.body.Name;
@@ -75,7 +78,6 @@ const createNewUser = async (req, res) => {
 
     // try and create a user in the DB.
     try {
-        
         //encrypt the password
         const hashedPwd = await bcrypt.hash(pwd, 10);
 
@@ -84,7 +86,6 @@ const createNewUser = async (req, res) => {
 
         // if no cookies or api call from api/home, create new user in DB that is a browser
         if (createCheck == "false" || !cookies?.jwt) {
-            
             // create user data
             const newUser = {
                 name: Name,
@@ -92,7 +93,7 @@ const createNewUser = async (req, res) => {
                 email: Email,
             };
 
-            // create refresh token 
+            // create refresh token
             const refreshToken = jwt.sign(
                 { name: Name },
                 process.env.REFRESH_TOKEN_SECRET,
@@ -114,11 +115,10 @@ const createNewUser = async (req, res) => {
                 sameSite: "Strict",
                 maxAge: 12 * 60 * 60 * 1000,
             });
-        } 
+        }
         // if this is an actual user registration, they will already have an enrty in the DB
         // we will override thie entry and fill it in with the accurate basic user info
         else {
-
             // get the refresh token for the user
             const refreshToken = cookies.jwt;
 
@@ -133,10 +133,10 @@ const createNewUser = async (req, res) => {
 
             // update duplicateUsers name
             duplicateUser.name = Name;
-    
+
             // update users password
             duplicateUser.password = hashedPwd;
-            
+
             // update users email
             duplicateUser.email = Email;
 
@@ -145,7 +145,6 @@ const createNewUser = async (req, res) => {
 
             // persist user in the backend
             await UserDAO.updateUser(duplicateUser);
-
         }
 
         res.status(201).json({ success: `New user ${Email} created!` });
@@ -158,10 +157,9 @@ const createNewUser = async (req, res) => {
 // This function will log in a user as long as they have entered their correct email
 // and password
 const loginUser = async (req, res) => {
-
     // get the password from the request body
     const pwd = req.body.Password;
-    
+
     // get the email from the request body
     const user = req.body.Username;
 
@@ -179,17 +177,16 @@ const loginUser = async (req, res) => {
 
     // evaluate password by encrpyting provided password and comparing
     const match = await bcrypt.compare(pwd, foundUser.password);
-    
+
     // if the passwords match, send access token and log user in
     if (match) {
-
         // create JWT access and new refresh token for user now that they are logged in
         const accessToken = jwt.sign(
             {
                 UserInfo: {
                     name: foundUser.name,
                     email: foundUser.email,
-                    roles: "user",
+                    roles: foundUser.type,
                 },
             },
             process.env.ACCESS_TOKEN_SECRET,
@@ -201,7 +198,7 @@ const loginUser = async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: "1d" }
         );
-        
+
         // Saving refreshToken with current user
         foundUser.refreshToken = refreshToken;
 
@@ -217,19 +214,16 @@ const loginUser = async (req, res) => {
 
         // Send access token to front end
         res.json({ user: accessToken });
-
-    } 
-    else {
+    } else {
         res.sendStatus(401);
     }
 };
 
 // this function will allow a logged in user to request a new refresh token
-// this can only be called once the user places an order, which we 
+// this can only be called once the user places an order, which we
 // have guarded in the front end from being able to be reached unless
 // you have logged in
 const handleRefreshToken = async (req, res) => {
-
     // get coookie from request
     const cookies = req.cookies;
 
@@ -261,7 +255,7 @@ const handleRefreshToken = async (req, res) => {
                     UserInfo: {
                         name: foundUser.name,
                         email: foundUser.email,
-                        roles: "user",
+                        roles: foundUser.type,
                     },
                 },
                 process.env.ACCESS_TOKEN_SECRET,
@@ -272,11 +266,10 @@ const handleRefreshToken = async (req, res) => {
     );
 };
 
-// This function will allow the user to log out of their account, which will in turn 
+// This function will allow the user to log out of their account, which will in turn
 // remove the refresh token associated with account, and not allowing us to
 // persist any information for the user in the front end
 const handleLogout = async (req, res) => {
-
     // get coookie from request
     const cookies = req.cookies;
 

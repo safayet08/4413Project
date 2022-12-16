@@ -10,14 +10,15 @@ import NotFound from "./components/notFound";
 import LoginForm from "./pages/loginForm";
 import RegisterForm from "./pages/registerForm";
 import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Item from "./pages/item";
-import CartProvider from "./components/cartContext";
+import CartProvider from "./components/context/cartContext";
 
 import { getSalesRecords } from "./services/adminService";
 
 import axios from "axios";
-import AdminView from "./pages/AdminView";
+import AdminView from "./components/AdminView";
 
 class App extends Component {
     state = {};

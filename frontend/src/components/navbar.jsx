@@ -3,18 +3,19 @@ import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { CartContext } from "./cartContext";
+import { CartContext } from "./context/cartContext";
 import CartProduct from "./CartProduct";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useRef } from "react";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useNavigate } from "react-router-dom";
+import { logoutService } from "../services/userService";
+import { port } from "../services/frontEndConfig";
 
 const NavBar = ({ user, changeUser }) => {
     const cart = useContext(CartContext);
     const navigate = useNavigate();
-    const port = 3333;
     const textFieldRef = useRef(null);
     const filterFieldRef = useRef(null);
     const [show, setShow] = useState(false);
@@ -24,6 +25,9 @@ const NavBar = ({ user, changeUser }) => {
         changeUser([]);
         const apiUrl = `http://localhost:${port}/api/user/logout`;
         const response = await axios.get(apiUrl, { withCredentials: true });
+    const handleLogout = async () => {
+        changeUser([]);
+        await logoutService();
         localStorage.clear();
         window.location.reload(false);
     };
@@ -38,6 +42,15 @@ const NavBar = ({ user, changeUser }) => {
                 ? "brand"
                 : "category";
 
+        navigate(`/search?query=${query}&filter=${filter}`);
+    };
+        const query = textFieldRef.current.value;
+        const filter =
+            searchFilter === "Filter"
+                ? "name"
+                : searchFilter === "By Brand"
+                ? "brand"
+                : "category";
         navigate(`/search?query=${query}&filter=${filter}`);
     };
     // console.log(cart.items)
@@ -189,6 +202,11 @@ const NavBar = ({ user, changeUser }) => {
                                     variant="outline-secondary"
                                 >
                                     <i
+                                <Button
+                                    onClick={handleClick}
+                                    variant="outline-secondary"
+                                >
+                                    <i
                                         className="fa fa-search"
                                         aria-hidden="true"
                                     ></i>
@@ -209,6 +227,16 @@ const NavBar = ({ user, changeUser }) => {
                     <div className="buttons text-center">
                         {console.log("inside navbar")}
                         {console.log(user.name)}
+                        {user && user.roles === "admin" && (
+                            <NavLink
+                                to="/admin"
+                                className="btn btn-dark m-2"
+                                onClick={routeChange}
+                            >
+                                Analytics
+                            </NavLink>
+                        )}
+
                         {!user.name && (
                             <>
                                 <NavLink
@@ -238,7 +266,7 @@ const NavBar = ({ user, changeUser }) => {
                                     onClick={handleLogout}
                                 >
                                     <i
-                                        class="fa fa-sign-out"
+                                        className="fa fa-sign-out"
                                         aria-hidden="true"
                                     ></i>{" "}
                                     Logout

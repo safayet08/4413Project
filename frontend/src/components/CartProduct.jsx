@@ -1,4 +1,4 @@
-import { CartContext } from "./cartContext";
+import { CartContext } from "./context/cartContext";
 import { useContext } from "react";
 import { getItem } from "../services/fakeItemService";
 
@@ -6,8 +6,7 @@ function CartProduct(props) {
     const cart = useContext(CartContext);
     const quantity = props.quantity;
     const item = props.item;
-    const id= item._id
-
+    const id = item._id;
 
     return (
         <div key={item.id}>

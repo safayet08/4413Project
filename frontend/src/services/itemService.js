@@ -1,7 +1,5 @@
-import http from "./httpService";
-//import { apiUrl } from "../config.json";
 import axios from "axios";
-const port = "3333";
+import { port } from "./frontEndConfig";
 
 const apiUrl = `http://localhost:${port}/api/item`;
 const apiEndpoint = `${apiUrl}/items`;

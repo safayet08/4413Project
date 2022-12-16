@@ -92,6 +92,7 @@ const NavBar = ({ user, changeUser }) => {
                             to="/checkout"
                             className="btn btn-dark btn-lg btn-block"
                             onClick={handleClose}
+                            state={{user:user}}
                         >
                             Go to checkout
                         </Link>

@@ -1,9 +1,9 @@
 import * as ItemService from "../services/fakeItemService";
 import { Link, useParams, useLocation} from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import { Button, Form } from "reactstrap";
 import jwtDecode from "jwt-decode";
-
+import { CartContext } from "../components/cartContext";
 const Item = () => {
     const formstyle = {
         padding: "5px",
@@ -87,7 +87,7 @@ const Item = () => {
                         <p className="lead">{item.description}</p>
                         <button
                             className="btn btn-outline-dark"
-                            //onClick={() => addProduct(product)}
+                        onClick={() => cart.addOneToCart(item)}
                         >
                             Add to Cart
                         </button>

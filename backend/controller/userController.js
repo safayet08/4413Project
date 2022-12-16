@@ -22,7 +22,7 @@ const getUser = async (req, res) => {
     const refreshToken = cookies.jwt;
 
     // find the user attached to the refresh token
-    const foundUser = await userDAO.getUser( "refreshToken", refreshToken)
+    const foundUser = await UserDAO.getUser( "refreshToken", refreshToken)
 
     // if user is not found, then clear cookie and send no-content back
     if (!foundUser) {

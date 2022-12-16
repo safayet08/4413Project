@@ -42,14 +42,21 @@ export async function getItem(itemId) {
     return response.data;
 }
 
-export async function postReview(itemId, reviews, identifier, type) {
+export async function postReview(itemId, reviews) {
     const itemRoute = `/addReview`;
-    const body={
-        review:reviews,
-        itemId:itemId,
-        userId:identifier,
-        type:type
+    const rating= reviews.rating;
+    const comment= reviews.rating;
+    const user= reviews.user
+    const type=reviews.type
 
+    const body={
+        review:{
+            rating: rating,
+            comment:comment,
+            user:user,
+            type:type
+        }, 
+        itemId:itemId,
     }
     console.log(apiUrl + itemRoute);
     const response = await axios.post(apiUrl + itemRoute, body);

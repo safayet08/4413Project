@@ -11,28 +11,29 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kumarj95/4413Project.git"
+    "url": "git+https://github.com/safayet08/4413Project.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Kumarj95/4413Project/issues"
+    "url": "https://github.com/safayet08/4413Project/issues"
   },
   "type": "module",
-  "homepage": "https://github.com/Kumarj95/4413Project#readme",
+  "homepage": "https://github.com/safayet08/4413Project#readme",
   "dependencies": {
     "axios": "^1.2.0",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
+    "concurrently": "^7.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "concurrently": "^7.6.0",    
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.3",
     "query-string": "^7.1.3",
     "randomstring": "^1.2.3",
+    "react-scripts": "^5.0.1",
     "url": "^0.11.0"
   },
   "devDependencies": {

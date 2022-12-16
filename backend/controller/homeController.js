@@ -37,7 +37,7 @@ const enterSite = async (req, res) => {
         // update to properly redirect without hard setting values
         res.redirect(
             307,
-            "https://localhost:" + port + "/api/user/addUser?createCheck=false"
+            "http" + (req.socket.encrypted ? "s" : "") + "://" + req.headers.host + "/api/user/addUser?createCheck=false"
         );
     } 
     else {
@@ -48,7 +48,7 @@ const enterSite = async (req, res) => {
 
         if (!user) {
             console.log("User not found, redirect to login page.");
-            return res.sendStatus(301); //Unauthorized
+            return res.sendStatus(401); //Unauthorized
         }
 
         if (user.type == "user") {

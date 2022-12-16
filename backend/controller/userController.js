@@ -129,7 +129,8 @@ const createNewUser = async (req, res) => {
             );
 
             // if no duplicate user in DB, something suspicious is happening, send 401 error
-            if (!duplicateUser) return res.sendStatus(401); //Unauthorized
+
+            if (!duplicateUser) return res.sendStatus(301); //Unauthorized
 
             // update duplicateUsers name
             duplicateUser.name = Name;

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { port } from "./frontEndConfig";
-const API_URL = window.location.protocol+"//"+window.location.hostname+ ":5000"+"/api";
+const API_URL = "/api";
 
 export async function registerService(fullName, email, password) {
     return await axios.post(`${API_URL}/user/addUser`, {

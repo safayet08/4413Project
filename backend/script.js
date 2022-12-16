@@ -4,4 +4,4 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 
-console.log(join(__dirname,"..","frontend"))
+console.log(join(__dirname))

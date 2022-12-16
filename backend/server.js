@@ -108,7 +108,7 @@ console.log("CONFIG PORT->", config.PORT)
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(join(__dirname, "../frontend/build")));
-
+    console.log(join(__dirname, "../frontend/build"));
   app.get("*", (req, res) => {
     res.sendFile(join(__dirname, "client", "build", "index.html"));
   });

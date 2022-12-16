@@ -30,8 +30,8 @@ const Checkout = () => {
         }
     }, []);
 
-    const userApi = window.location.protocol+"//"+window.location.hostname+ ":5000" +   "/api/user";
-    const orderApi = window.location.protocol+"//"+window.location.hostname+ ":5000"    +"/api/order";
+    const userApi =   "/api/user";
+    const orderApi = "/api/order";
     const handleCheckout = async (e) => {
         e.preventDefault();
         const res = await axios.get(`${userApi}/getUser`);

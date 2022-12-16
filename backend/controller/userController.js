@@ -241,7 +241,7 @@ const handleRefreshToken = async (req, res) => {
     if (!foundUser) return res.sendStatus(403); //Forbidden is no user in DB
 
     // if the user is in fact a browser, and they have gotten past security, they will not be allowed.
-    if (foundUser.type == "browser") return res.sendStatus(301); // if user is type browser, they don't get a new access token
+    if (foundUser.type == "browser") return res.sendStatus(401); // if user is type browser, they don't get a new access token
 
     // evaluate jwt refresh token to make sure it is legit. If so, then send new access token.
     jwt.verify(
@@ -275,7 +275,7 @@ const handleLogout = async (req, res) => {
     const cookies = req.cookies;
 
     // if no cookie, unauthorized
-    if (!cookies?.jwt) return res.sendStatus(401);
+    if (!cookies?.jwt) return res.sendStatus(301);
 
     // get refresh token from cookie
     const refreshToken = cookies.jwt;

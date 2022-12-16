@@ -39,3 +39,17 @@ export async function getItem(itemId) {
 
     return response.data;
 }
+
+export async function postReview(itemId, reviews, identifier, type) {
+    const itemRoute = `/addReview`;
+    const body = {
+        review: reviews,
+        itemId: itemId,
+        userId: identifier,
+        type: type,
+    };
+    console.log(apiUrl + itemRoute);
+    const response = await axios.post(apiUrl + itemRoute, body);
+
+    return response.data;
+}

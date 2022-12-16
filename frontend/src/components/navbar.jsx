@@ -36,7 +36,6 @@ const NavBar = ({ user, changeUser }) => {
                 : searchFilter === "By Brand"
                 ? "brand"
                 : "category";
-
         navigate(`/search?query=${query}&filter=${filter}`);
     };
     // console.log(cart.items)
@@ -208,6 +207,16 @@ const NavBar = ({ user, changeUser }) => {
                     <div className="buttons text-center">
                         {console.log("inside navbar")}
                         {console.log(user.name)}
+                        {user && user.roles === "admin" && (
+                            <NavLink
+                                to="/admin"
+                                className="btn btn-dark m-2"
+                                onClick={routeChange}
+                            >
+                                Analytics
+                            </NavLink>
+                        )}
+
                         {!user.name && (
                             <>
                                 <NavLink

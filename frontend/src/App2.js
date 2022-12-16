@@ -15,7 +15,6 @@ import "./App.css";
 import Item from "./pages/item";
 import { CartContext } from "./components/context/cartContext";
 import CartProvider from "./components/context/cartContext";
-import axios from "axios";
 import AdminView from "./components/AdminView";
 import { getRefreshToken } from "./services/userService";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -57,7 +56,12 @@ const App2 = () => {
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/search" element={<Home />} />
-                    <Route path="/admin" element={<AdminView />} />
+                    {user && user.roles === "admin" && (
+                        <Route exact path="/admin" element={<AdminView />} />
+                    )}{" "}
+                    {user.roles !== "admin" && (
+                        <Route exact path="/admin" element={<NotFound />} />
+                    )}
                     <Route path="/register" element={<RegisterForm />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/item/:_id" element={<Item />} />

@@ -105,7 +105,7 @@ const AdminView = () => {
                         />
                     </div>
 
-                    <div>
+                    <div className="flex-child">
                         <p>Purchase</p>
                         <ProgressBar
                             striped

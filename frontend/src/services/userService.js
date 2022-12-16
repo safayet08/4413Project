@@ -19,7 +19,9 @@ export async function loginService(email, password) {
 }
 
 export async function logoutService() {
-    return await axios.post(`${API_URL}/user/logout`);
+    return await axios.get(`${API_URL}/user/logout`, {
+        withCredentials: true,
+    });
 }
 
 export async function getRefreshToken() {

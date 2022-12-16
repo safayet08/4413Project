@@ -13,7 +13,7 @@ const port = config.PORT;
 // This function will check whether a cookie exists on the user entering the site, and if not, then send new one
 const enterSite = async (req, res) => {
     const cookies = req.cookies;
-
+    console.log("entered site rn")
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!

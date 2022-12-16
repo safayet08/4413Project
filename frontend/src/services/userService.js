@@ -15,6 +15,8 @@ export async function loginService(email, password) {
     return await axios.post(`${API_URL}/user/login`, {
         Username: email,
         Password: password,
+        withCredentials: true,
+        credentials: "include",
     });
 }
 

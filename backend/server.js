@@ -96,6 +96,8 @@ app.use(errorHandler);
 //const PORT = process.env.PORT || 5000;
 
 // initialize the application, set backend port to config.js file specified port
+console.log("CONFIG PORT->", config.PORT)
+
 app.listen(
     config.PORT,
     console.log(

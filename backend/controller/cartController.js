@@ -84,6 +84,7 @@ const addCart = async(req, res) => {
         let cart = await CartDAO.getCart(owner);
 
         // find the item based on the item id from the request body
+        console.log(req.body)
         const item = await Item.findById(itemId);
         // if no item, return 404 error saying no item found
         if (!item) {

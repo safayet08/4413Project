@@ -7,10 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 backend/server.js",
     "client": "npm start --prefix frontend",
+    "start": "pm2-runtime start ecosystem.config.js --env production",
+    
     "dev": "concurrently  \"npm run client\" \"npm run server\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ./frontend && npm run build --prefix frontend"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:5000/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/safayet08/4413Project.git"
@@ -34,6 +36,7 @@
     "express-mongo-sanitize": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.3",
+    "pm2": "^5.2.2",
     "query-string": "^7.1.3",
     "randomstring": "^1.2.3",
     "react-scripts": "^5.0.1",

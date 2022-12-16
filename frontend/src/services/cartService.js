@@ -11,15 +11,18 @@ export async function getCart() {
 
 export async function addToCart(body, headers) {
     console.log(body)
-    return await axios.post(`${CART_API_URL}/addCart`, {
+    return await axios.post(`${CART_API_URL}/addCart`, 
         body,
-        headers,
-    });
+        {
+            headers:headers
+        }
+    );
 }
 
 export async function addToID(body, headers) {
-    return await axios.post(`${CART_API_URL}/addCart`, {
-        body,
-        headers,
-    });
+    return await axios.post(`${CART_API_URL}/addCart`, 
+        body,{
+        headers:headers
+        }
+    );
 }

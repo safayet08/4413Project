@@ -1,9 +1,6 @@
 // import the user Data Access Object in order to make data calls to the user DB
 import UserDAO from "../dao/UserDAO.js";
 
-// import the cart Data Access Object in order to make data calls to the cart DB
-import cartDAO from "../dao/cartDAO.js";
-
 // import the bcrypt package for encrypting the jwt tokens
 import bcrypt from "bcrypt";
 
@@ -22,7 +19,7 @@ const getUser = async (req, res) => {
     if (!cookies?.jwt) return res.sendStatus(204); //No content
 
     // get refreshtoken from jwt cookie
-    const refreshToken = cookies.jwt; 
+    const refreshToken = cookies.jwt;
 
     // find the user attached to the refresh token
     const foundUser = await UserDAO.getUser("refreshToken", refreshToken);
@@ -161,22 +158,7 @@ const createNewUser = async (req, res) => {
 // This function will log in a user as long as they have entered their correct email
 // and password
 const loginUser = async (req, res) => {
-    // get cookie from request
-    const cookies = req.cookies;
-
-    // if no cookie, then send back 204 no content error
-    if (!cookies?.jwt) return res.sendStatus(204); //No content
-
-    // get refreshtoken from jwt cookie
-    const refreshToken = cookies.jwt;
-
-    // find the user attached to the refresh token
-    const foundBrowser = await UserDAO.getUser("refreshToken", refreshToken);
-
-    const foundBrowserID = foundBrowser._id;
-
-    let foundCart;
-    
+    // get the password from the request body
     const pwd = req.body.Password;
 
     // get the email from the request body
@@ -199,18 +181,6 @@ const loginUser = async (req, res) => {
 
     // if the passwords match, send access token and log user in
     if (match) {
-
-        const foundUserCart = await cartDAO.getCart(foundUser._id)
-
-        if (foundBrowser && !foundUserCart) {
-
-            foundCart = await cartDAO.getCart(foundBrowserID)
-
-            if (foundCart) {
-                foundCart.owner = foundUser._id
-                await cartDAO.updateCart(foundCart)
-            }
-        }
         // create JWT access and new refresh token for user now that they are logged in
         const accessToken = jwt.sign(
             {
@@ -305,7 +275,7 @@ const handleLogout = async (req, res) => {
     const cookies = req.cookies;
 
     // if no cookie, unauthorized
-    if (!cookies?.jwt) return res.sendStatus(301);
+    if (!cookies?.jwt) return res.sendStatus(401);
 
     // get refresh token from cookie
     const refreshToken = cookies.jwt;

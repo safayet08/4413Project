@@ -40,6 +40,8 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 // import config file for variables to use across the project
 import config from "./config/config.js";
 import { dirname,join } from 'path';
+import { fileURLToPath } from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = dirname(__filename);

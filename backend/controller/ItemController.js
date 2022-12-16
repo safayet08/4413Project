@@ -52,6 +52,7 @@ export const getBestSellersFromBackend= async(req,res)=>{
 
 export const createItem= async(req,res)=>{
     try{
+        console.log("YERRR")
         const response= await ItemDAO.createItem(req,res)
         res.json(response)
     }catch(err){

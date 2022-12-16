@@ -133,7 +133,8 @@ export const updateItem = async (req, res) => {
 };
 
 export const createItem = async (req, res) => {
-  const newItem = req.body.item;
+  const newItem = req.body;
+  console.log(req.body)
 
   try {
     const res = await Item.create(newItem);

@@ -34,17 +34,24 @@ const Item = () => {
             comment: comment,
         };
         try {
+            if(reviews.rating>5 || reviews.rating<0){
+                alert(
+                    "Rating between 0 and 5!"
+                );    
+            }else{
             const res = await postReview(
                 item._id,
                 reviews,
                 user.email,
                 "email"
             );
-            const data = await res.data();
+            const data =  res.data;
             console.log("-post review-->" + data);
 
             window.location.reload(false);
+            }
         } catch (error) {
+            console.log(error)
             alert(
                 "Error submitting review, this user might already have a review"
             );
@@ -96,7 +103,7 @@ const Item = () => {
                         <p className="lead">
                             {item.rating} <i className="fa fa-star"></i>
                         </p>
-                        <h3 className="display-6  my-4">item </h3>
+                        <h3 className="display-6  my-4">{item.name} </h3>
                         <p className="lead">{item.description}</p>
                         <button
                             className="btn btn-outline-dark"

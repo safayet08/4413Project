@@ -40,6 +40,19 @@ export async function getItem(itemId) {
     return response.data;
 }
 
+export async function addItem(item){
+    const route= `${apiUrl}/addItem`
+    const req=item
+    console.log(route)
+    if(!req.image || req.image===""){
+        req.image="https://img.freepik.com/free-vector/abstract-coming-soon-halftone-style-background-design_1017-27282.jpg?w=2000"
+    }
+    console.log(req)
+
+    const response= await axios.put(route, req)
+    return response
+}
+
 export async function postReview(itemId, reviews) {
     const itemRoute = `/addReview`;
     const rating= reviews.rating;

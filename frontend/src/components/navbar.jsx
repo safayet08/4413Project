@@ -29,15 +29,30 @@ const NavBar = ({ user, changeUser }) => {
     const handleClick = (e) => {
         // console.log(textFieldRef.current.value)
         // console.log(searchFilter)
+        e.preventDefault()
         const query = textFieldRef.current.value;
         const filter =
-            searchFilter === "Filter"
+            searchFilter === "Filter" || searchFilter==="By Name"
                 ? "name"
                 : searchFilter === "By Brand"
                 ? "brand"
                 : "category";
         navigate(`/search?query=${query}&filter=${filter}`);
     };
+
+    const onKeyPress= (e)=>{
+        if(e.which === 13) {
+            e.preventDefault();
+            const query = textFieldRef.current.value;
+            const filter =
+                searchFilter === "Filter" || searchFilter==="By Name"
+                    ? "name"
+                    : searchFilter === "By Brand"
+                    ? "brand"
+                    : "category";
+            navigate(`/search?query=${query}&filter=${filter}`);    
+          } 
+    }
     // console.log(cart.items)
     const productsCount = cart.items.reduce(
         (sum, product) => sum + product.quantity,
@@ -161,6 +176,14 @@ const NavBar = ({ user, changeUser }) => {
                                 >
                                     <NavDropdown.Item
                                         onClick={() =>
+                                            setSearchFilter("By Name")
+                                        }
+                                    >
+                                        By Name
+                                    </NavDropdown.Item>
+
+                                    <NavDropdown.Item
+                                        onClick={() =>
                                             setSearchFilter("By Brand")
                                         }
                                     >
@@ -180,6 +203,7 @@ const NavBar = ({ user, changeUser }) => {
                                     className="me-2"
                                     aria-label="Search"
                                     ref={textFieldRef}
+                                    onKeyDown={onKeyPress}
                                 />
 
                                 <Button

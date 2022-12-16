@@ -51,16 +51,6 @@ const App2 = () => {
 
         getUserCart();
     }, []);
-    try {
-        const accessToken = localStorage.getItem("accToken");
-        // console.log(" access token " +accessToken)
-        const user = jwtDecode(accessToken).UserInfo;
-        setUser(user)
-        console.log(user)
-        // console.log(user);
-    } catch (ex) {
-        console.log("no access token");
-    }
 
     const changeUser = (user) => {
         setUser(user);

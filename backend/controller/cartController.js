@@ -26,10 +26,10 @@ const getCart = async(req, res) => {
     const owner= await UserDAO.getUser( "refreshToken", refreshToken)
 
     // if user is not found, then clear cookie and send no-content back
-    /*if (!foundUser) {
+    if (!owner) {
         res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'None'});
         return res.sendStatus(204);
-    }*/
+    }
 
     // find the cart attached to the user id 
     const cart = await CartDAO.getCart(owner._id);

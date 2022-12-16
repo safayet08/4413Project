@@ -5,6 +5,7 @@ import { Button, Form } from "reactstrap";
 import jwtDecode from "jwt-decode";
 import { CartContext } from "../components/cartContext";
 const Item = () => {
+    const cart =useContext(CartContext)
     const formstyle = {
         padding: "5px",
         width: "50vw",

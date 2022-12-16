@@ -72,11 +72,10 @@ const addCart = async(req, res) => {
     const owner = foundUser._id;
 
     // get itemID from reqeust body
-    console.log(req.body)
-    const itemId = req.body.body.itemId;
+    const itemId = req.body.itemId;
 
     // get quantity of item from reqeust body
-    const quantity = req.body.body.quantity;
+    const quantity = req.body.quantity;
 
     // try to add/remove a item to/from cart, if no cart, create new cart
     try {
@@ -86,7 +85,6 @@ const addCart = async(req, res) => {
 
         // find the item based on the item id from the request body
         const item = await Item.findById(itemId);
-        console.log(itemId)
         // if no item, return 404 error saying no item found
         if (!item) {
             res.status(404).send({ message: "item not found" });

@@ -97,9 +97,10 @@ const Checkout = () => {
 
     const ShowCheckout = () => {
         // stale state
-        let subtotal = 0;
+        let subtotal = cartContext.getTotalCost;
         let shipping = 30.0;
-        let totalItems = 0;
+        let totalItems = cartContext.items.length;
+
 
         return (
             <>

@@ -40,7 +40,7 @@ const Item = (props) => {
                         className="btn btn-success m-1"
                         state={{ item: item }}
                     >
-                        Buy Now
+                        Details
                     </Link>
                     <button
                         className="btn btn-warning m-1"

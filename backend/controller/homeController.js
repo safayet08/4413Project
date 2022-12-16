@@ -13,7 +13,6 @@ const port = config.PORT;
 // This function will check whether a cookie exists on the user entering the site, and if not, then send new one
 const enterSite = async (req, res) => {
     const cookies = req.cookies;
-    console.log("entered site rn")
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -33,10 +32,12 @@ const enterSite = async (req, res) => {
     // if there is no cookie, assign one and create new user object in DB, assigning random user values for their visit.
     // once the cookie has expired, then delete user from DB??
     if (!cookies?.jwt) {
+        console.log("entered site rn")
+
         // update to properly redirect without hard setting values
         res.redirect(
             307,
-            "http://localhost:" + port + "/api/user/addUser?createCheck=false"
+            "https://localhost:" + port + "/api/user/addUser?createCheck=false"
         );
     } 
     else {

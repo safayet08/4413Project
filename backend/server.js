@@ -34,6 +34,8 @@ import adminRouter from "./routes/adminRoute.js";
 // import JWT verification middleware to check for access token verification
 import JWTVerify from "./middleware/JWTVerify.js";
 
+import mongoSanitize from "express-mongo-sanitize";
+
 // import error handler middleware
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
@@ -73,6 +75,8 @@ app.use(express.json());
 // initialize the cookie parser package
 app.use(cookieparser());
 
+app.use(mongoSanitize());
+
 // set up user route with the URL /api/user
 app.use("/api/user", userRouter);
 
@@ -90,7 +94,7 @@ app.use("/api/admin", adminRouter);
 
 // uncomment the below once we connect the backend and frontend
 // sets up JWT authentication middleware for when an order is placed, verify is user logged in
-app.use(JWTVerify.verifyJWT);
+//app.use(JWTVerify.verifyJWT);
 
 // set up order route with URL /api/order
 app.use("/api/order", orderRouter);

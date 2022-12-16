@@ -8,7 +8,7 @@ const verifyJWT = async (req, res, next) => {
 
     // parse authentication header
     const authHeader = req.headers.authorization || req.headers.Authorization;
-    console.log(authHeader)
+    
     // if no header with Bearer in it, then user in unauthorized
     if (!authHeader?.startsWith('Bearer ')) return res.sendStatus(401);
 

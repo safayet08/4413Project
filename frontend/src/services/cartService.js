@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { port } from "./frontEndConfig";
-const CART_API_URL = `http://localhost:${port}/api/cart`;
+const CART_API_URL = window.location.protocol+"//"+window.location.hostname+ ":3333"+ "/api/cart";
 
 export async function getCart() {
     return await axios.get(`${CART_API_URL}/getCart`, {

@@ -26,7 +26,7 @@
 //             this.props.router.push('/')
 //         } 
 //             catch (ex) {
-//             if (ex.response && ex.response.status === 401) {
+//             if (ex.response && ex.response.status === 301) {
 //                 const errors = { ...this.state.errors };
 //                 errors.Username = "Incorrect Email or Password";
 //                 this.setState({ errors });
@@ -139,7 +139,7 @@ const LoginForm = () => {
                     window.location.reload(false);
                 } 
                     catch (ex) {
-                    if (ex.response && ex.response.status === 401) {
+                    if (ex.response && ex.response.status === 301) {
                         const errors = { ...error };
                         errors.Username = "Incorrect Email or Password";
                         setError(errors)

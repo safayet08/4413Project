@@ -10,7 +10,7 @@ const verifyJWT = async (req, res, next) => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
     console.log(authHeader)
     // if no header with Bearer in it, then user in unauthorized
-    if (!authHeader?.startsWith('Bearer ')) return res.sendStatus(401);
+    if (!authHeader?.startsWith('Bearer ')) return res.sendStatus(301);
 
     // get access token
     const token = authHeader.split(' ')[1];
@@ -19,7 +19,7 @@ const verifyJWT = async (req, res, next) => {
     const cookies = req.cookies;
 
     // if no cookie, not allowed on site
-    if (!cookies?.jwt) return res.sendStatus(401);
+    if (!cookies?.jwt) return res.sendStatus(301);
 
     // get refresh Token from cookie
     const refreshToken = cookies.jwt;
@@ -28,7 +28,7 @@ const verifyJWT = async (req, res, next) => {
     const foundUser = await UserDAO.getUser("refreshToken", refreshToken);
 
     // if no found user, not authorized
-    if (!foundUser) return res.sendStatus(401); //Unauthorized
+    if (!foundUser) return res.sendStatus(301); //Unauthorized
 
     // verify the access token to ensure the user is allowed to place an order
     jwt.verify(

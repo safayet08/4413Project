@@ -47,7 +47,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 
-console.log(join(__dirname,"..","frontend"))
 // configure dotenv package based on dotenv file.
 dotenv.config();
 
@@ -107,10 +106,10 @@ app.use(errorHandler);
 console.log("CONFIG PORT->", config.PORT)
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(join(__dirname, "/frontend/build")));
-    console.log(join(__dirname, "../frontend/build"));
+  app.use(express.static(join(__dirname, "..","frontend","build")));
+    console.log(join(__dirname, "..","frontend","build"));
   app.get("*", (req, res) => {
-    res.sendFile(join(__dirname, "../frontend", "build", "index.html"));
+    res.sendFile(join(__dirname, "..","frontend", "build", "index.html"));
   });
 }
 

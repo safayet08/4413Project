@@ -91,31 +91,33 @@ const Item = () => {
                         >
                             Add to Cart
                         </button>
-                        {/* <Link to="/cart" className="btn btn-dark mx-3"> */}
+                        {/* <Link to="/cart" className="btn btn-dark mx-3">
                         Go to Cart
-                        {/* </Link> */}
+                        </Link> */}
                     </div>
                 </div>
                 {user.name ? (
                     <>
                         <div class="product-reviews" style={formContainerStyle}>
+                        <h3>Write a Review: </h3>
                             <form onSubmit={addReviewHandler}>
                                 {/* <Form.Group className="mb-3" controlId="rating"> */}
-                                    <label>Rating</label>
-                                    <input
+                                    <label>Rating:</label>
+                                    <input style={formstyle}
                                         value={rating}
                                         onChange={(e) =>
                                             setRating(e.target.value)
                                         }
                                         type="number"
                                     />
+                                    <br />
                                 {/* </Form.Group> */}
                                 {/* <Form.Group
                                     className="mb-3"
                                     controlId="comment"
                                 > */}
-                                    <label>Comment</label>
-                                    <input
+                                    <label>Comment:</label>
+                                    <input style={formstyle}
                                         value={comment}
                                         onChange={(e) =>
                                             setComment(e.target.value)
@@ -123,10 +125,11 @@ const Item = () => {
                                         as="textarea"
                                     />
                                 {/* </Form.Group> */}
-                                <br></br>
+                                <br /><br />
                                 <button
+                                    class="btn btn-outline-dark"
                                     type="submit"
-                                    style={{ background: "Black" }}
+                                    //style={{ background: "Black" }}
                                 >
                                     Add Review
                                 </button>
@@ -134,8 +137,8 @@ const Item = () => {
                         </div>
                     </>
                 ) : <></>}
-                <div>
-                    <h4>Reviews: </h4>
+                <div style={formContainerStyle}>
+                    <h3>Customer Reviews: </h3>
                     <br />
                     {review.length > 0 ? (
                         review.map((reviews) => {

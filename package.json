@@ -10,6 +10,7 @@
     "dev": "concurrently  \"npm run client\" \"npm run server\"",
     "postinstall": "npm install --prefix ./frontend && npm run build --prefix frontend"
   },
+  "proxy": "http://localhost:5000",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/safayet08/4413Project.git"
